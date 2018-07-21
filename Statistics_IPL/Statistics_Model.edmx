@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MayCHNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view '16MayCHN.IPL_MGMT_SYSTEM.Stat' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Stat">
+          <Key>
+            <PropertyRef Name="StatId" />
+          </Key>
+          <Property Name="StatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="int" />
+          <Property Name="Played" Type="int" />
+          <Property Name="Won" Type="int" />
+          <Property Name="Lost" Type="int" />
+          <Property Name="Tied" Type="int" />
+          <Property Name="NR" Type="int" />
+          <Property Name="NetRR" Type="float" />
+          <Property Name="Pts" Type="int" />
+          <Property Name="FromPoints" Type="int" />
+        </EntityType>
+        <EntityContainer Name="MayCHNModelStoreContainer">
+          <EntitySet Name="Stat" EntityType="Self.Stat" store:Type="Tables" store:Schema="IPL_MGMT_SYSTEM">
+            <DefiningQuery>SELECT 
+    [Stat].[StatId] AS [StatId], 
+    [Stat].[TeamId] AS [TeamId], 
+    [Stat].[Played] AS [Played], 
+    [Stat].[Won] AS [Won], 
+    [Stat].[Lost] AS [Lost], 
+    [Stat].[Tied] AS [Tied], 
+    [Stat].[NR] AS [NR], 
+    [Stat].[NetRR] AS [NetRR], 
+    [Stat].[Pts] AS [Pts], 
+    [Stat].[FromPoints] AS [FromPoints]
+    FROM [IPL_MGMT_SYSTEM].[Stat] AS [Stat]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MayCHNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Stat">
+          <Key>
+            <PropertyRef Name="StatId" />
+          </Key>
+          <Property Name="StatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" />
+          <Property Name="Played" Type="Int32" />
+          <Property Name="Won" Type="Int32" />
+          <Property Name="Lost" Type="Int32" />
+          <Property Name="Tied" Type="Int32" />
+          <Property Name="NR" Type="Int32" />
+          <Property Name="NetRR" Type="Double" />
+          <Property Name="Pts" Type="Int32" />
+          <Property Name="FromPoints" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="Statistics_IPL" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Stats" EntityType="Self.Stat" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MayCHNModelStoreContainer" CdmEntityContainer="Statistics_IPL">
+          <EntitySetMapping Name="Stats">
+            <EntityTypeMapping TypeName="MayCHNModel.Stat">
+              <MappingFragment StoreEntitySet="Stat">
+                <ScalarProperty Name="StatId" ColumnName="StatId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Played" ColumnName="Played" />
+                <ScalarProperty Name="Won" ColumnName="Won" />
+                <ScalarProperty Name="Lost" ColumnName="Lost" />
+                <ScalarProperty Name="Tied" ColumnName="Tied" />
+                <ScalarProperty Name="NR" ColumnName="NR" />
+                <ScalarProperty Name="NetRR" ColumnName="NetRR" />
+                <ScalarProperty Name="Pts" ColumnName="Pts" />
+                <ScalarProperty Name="FromPoints" ColumnName="FromPoints" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

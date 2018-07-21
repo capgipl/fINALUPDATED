@@ -1,0 +1,112 @@
+﻿<Window x:Class="Employee_Home.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Employee_Home"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="461.205" Width="886.213" HorizontalAlignment="Center" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <DockPanel>
+        <Grid Margin="0,0,2,1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="34*"></RowDefinition>
+                <RowDefinition Height="159*"></RowDefinition>
+                <RowDefinition Height="22*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="19,0,140,0" Width="717" Height="64" >
+                <Label x:Name="label"  Content="IPL MANAGEMENT SYSTEM" HorizontalAlignment="Left" Margin="240,10,0,0" VerticalAlignment="Top" Height="44" Width="357" FontSize="25" FontFamily="Times New Roman"/>
+            </StackPanel>
+            <TabControl x:Name="tabControl" HorizontalAlignment="Left" Width="876" RenderTransformOrigin="0.499,0.841" Margin="0,64,0,0" Grid.RowSpan="2">
+
+                <TabItem Header="Teams" Margin="-2,-2,-32,-1" FontSize="16" FontFamily="Times New Roman"/>
+                
+                <DockPanel Margin="250,150">
+                   
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                            <Label x:Name="lblid" Content="Team ID:" HorizontalAlignment="Left" Margin="194,28,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.116,1.896"/>
+                            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                            <Label x:Name="lblname" Content="Team Name:" HorizontalAlignment="Left" Margin="194,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.281,1.122"/>
+                            <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="350,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        </DockPanel>
+               
+                <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                            <Label x:Name="lblowner" Content="Owner:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.116,1.896" Margin="194,174,0,0"/>
+                            <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="23" Margin="350,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        </DockPanel>
+
+    <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  TextChanged="textBox3_TextChanged" Margin="350,177,0,0"/>
+
+                        </DockPanel>
+    <Button Name="ULogin" Content="Login" Width="50" Margin="10"></Button>
+                        </StackPanel>
+                
+                </DockPanel>
+              
+                
+              
+            
+
+
+                <TabItem Header="Players" Margin="31,-2,-51,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid>
+                        <Grid>
+                            <Label x:Name="lblpid" Content="Player ID:" HorizontalAlignment="Left" Margin="188,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.116,1.896"/>
+                            <Label x:Name="lbltid" Content="Team ID:" HorizontalAlignment="Left" Margin="188,59,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.281,1.122"/>
+                            <TextBox x:Name="txtpid" HorizontalAlignment="Left" Height="23" Margin="350,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox x:Name="txttid" HorizontalAlignment="Left" Height="23" Margin="350,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.531,0.126"/>
+                            <Label x:Name="lblpname" Content="Player Name:" HorizontalAlignment="Left" Margin="188,95,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="lblage" Content="Age:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.116,1.896" Margin="188,132,0,0"/>
+                            <TextBox x:Name="txtpname" HorizontalAlignment="Left" Height="23" Margin="350,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label x:Name="lblspec" Content="Speciality:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.116,1.89" Margin="188,169,0,0"/>
+
+                            <Button x:Name="btnadds"  Click="button_Click" Content="INSERT" HorizontalAlignment="Left" Margin="90,232,0,0" VerticalAlignment="Top" Width="89" Height="21" RenderTransformOrigin="0.46,2.687" FontSize="16"/>
+                            <Button x:Name="btnupds"  Click="button_Click" Content="UPDATE" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="89" Height="21" RenderTransformOrigin="0.46,2.687" Margin="235,233,0,0" FontSize="16"/>
+                            <Button x:Name="btndels"  Click="button_Click" Content="DELETE" HorizontalAlignment="Left" VerticalAlignment="Top" Width="89" Height="21" RenderTransformOrigin="0.46,2.687" Margin="385,233,0,0" FontSize="16"/>
+                            <Button x:Name="btnviews"  Click="button_Click" Content="VIEW" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="89" Height="21" RenderTransformOrigin="0.46,2.687" Margin="536,232,0,0" FontSize="16"/>
+                            <TextBox x:Name="txtage" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  TextChanged="textBox3_TextChanged" Margin="350,140,0,0"/>
+                            <TextBox x:Name="txtspec" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  TextChanged="textBox3_TextChanged" Margin="350,177,0,0" />
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Matches" Margin="48,-2,-68,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Schedule" Margin="65,-2,-84,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Venues" Margin="83,-2,-114,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Result" Margin="103,-2,-153,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Statistics" Margin="149,-2,-174,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Tickets" Margin="174,-2,-220,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid>
+
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <StackPanel  Grid.Row="2" Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="19,0,311,0"   >
+                <Label x:Name="label1"  Content="Copyright. All rights are Reserved. 2018" HorizontalAlignment="Left" Margin="309,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="237" Height="24" FontFamily="Times New Roman"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</Window>

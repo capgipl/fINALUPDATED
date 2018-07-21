@@ -1,0 +1,127 @@
+﻿<Window x:Class="Cust_Home.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cust_Home"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="495.213" Width="660.284">
+    <Grid>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Label x:Name="lblTitle" Content="IPL MANAGEMENT SYSTEM" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="25"  VerticalAlignment="Top" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Margin="276,5,81,5" Width="392">
+                <Label x:Name="lblCopy" Content="               All CopyRights Reserved.2018!!" Height="41" Width="327" RenderTransformOrigin="0.495,0.498"/>
+            </StackPanel>
+            <TabControl Name="tcSample" FontSize="18" >
+                <TabItem Header="Home" FontSize="16" FontFamily="Times New Roman" >
+                </TabItem>
+                <TabItem Header="Player Info" FontSize="16" FontFamily="Times New Roman" Margin="-2,-2,-36,-1">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal"/>
+
+                        </StackPanel>
+
+
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <DataGrid  Name="dgteam2" Width="496" Height="273"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="Tickets" Margin="27,-2,-51,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="50,50">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltid" Content="Ticket ID:" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txttid" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltcat" Content="Ticket Category:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.281,1.122"/>
+                                <ComboBox x:Name="txttcat" HorizontalAlignment="Left" Height="23"  VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblmatchname" Content="Match Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.116,1.896"/>
+                                <ListBox x:Name="txtmaname" HorizontalAlignment="Left" Height="23"   VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltprice" Content="Price:" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txttpice" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button Name="tBook" Content="Book" Width="70" Margin="10"></Button>
+
+                                <Button Name="preset" Content="Reset" Width="70" Margin="10"></Button>
+
+                                <Button Name="pview" IsEnabled="False" Content="View Ticket"  Width="92" Margin="10"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Result" Margin="48,-2,-68,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="50,50">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltmid" Content="Team ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <TextBox x:Name="txttmid" HorizontalAlignment="Right" Height="23" Width="137" TextWrapping="Wrap" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblplayed" Content="Played:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtplayed" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblwon" Content="Won:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtwon" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbllost" Content="Lost:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtlost" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltied" Content="Tied:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txttied" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnr" Content="NR:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtnr" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnetrr" Content="NetRR:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtnetrr" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblpts" Content="PTS:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtpts" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblfpts" Content="FromPTS:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtfpts" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+
+                <TabItem Header="News"  FontSize="16" FontFamily="Times New Roman" Margin="65,-2,-101,-1">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnewsdesc" Content="News Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtnewsdes" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="124" TextWrapping="Wrap" VerticalAlignment="Top" Width="283"  />
+                            </DockPanel>
+
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+
+        </DockPanel>
+    </Grid>
+</Window>

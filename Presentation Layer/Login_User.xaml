@@ -1,0 +1,151 @@
+﻿<Window x:Class="Presentation_Layer.Login_User"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation_Layer"
+        mc:Ignorable="d"
+        Title="Login_User" Height="653.007" Width="831.592" WindowState="Maximized">
+    <Grid>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Label x:Name="lblTitle" Content="IPL MANAGEMENT SYSTEM" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="35"  VerticalAlignment="Top" Height="60" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Margin="276,5,81,5" Width="392">
+                <Label x:Name="lblCopy" Content="All CopyRights Reserved.2018!! " Height="41" Width="587"/>
+            </StackPanel>
+            <TabControl Name="tcSample" FontSize="18" >
+                <TabControl.Background>
+                    <ImageBrush ImageSource="Images\IPL_WithBats.png" Opacity="0.2"></ImageBrush>
+                </TabControl.Background>
+                <TabItem Header="Home" FontSize="16" FontFamily="Times New Roman"  Margin="-2,-2,0,0" >
+                    <Grid Margin="10,16,-10,-16" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+
+
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Perpetua Titling MT" FontSize="36" FontWeight="Bold" SnapsToDevicePixels="True" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Grid.ColumnSpan="2" Margin="10,49,249,57" Grid.RowSpan="2"/>
+                        <TextBlock  Grid.RowSpan="3" FontSize="100" VerticalAlignment="Center"  FontFamily="Verdana"  IsEnabled="False" TextWrapping="WrapWithOverflow" Margin="366,129,-5,8" Height="341" Grid.ColumnSpan="2" Text="Welcome!!"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="User SignIn" Name="signin" FontSize="16" FontFamily="Times New Roman" Margin="-2,-2,-36,-1">
+                    <DockPanel Margin="70,70">
+
+
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="thead" Content=" SIGN IN" FontWeight="Bold" HorizontalAlignment="Left" FontSize="35" FontFamily="Times New Roman" Width="184" VerticalAlignment="Top" Height="69"    >
+
+                                </Label>
+
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblid" Content="User Name:" FontSize="25" FontWeight="Bold" FontFamily="Times New Roman" HorizontalAlignment="Left" Width="145" VerticalAlignment="Top"    />
+                                <TextBox x:Name="cbteid"  HorizontalAlignment="Right" TextWrapping="Wrap" Height="32" Width="143"  VerticalAlignment="Top"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblname" Content="Password:" Width="140" FontWeight="Bold" HorizontalAlignment="Left" FontSize="25" VerticalAlignment="Top"  />
+                                <PasswordBox x:Name="txtname" HorizontalAlignment="Right" Height="32" VerticalAlignment="Top" Width="143"/>
+                            </DockPanel>
+                            <DockPanel Width="190"  >
+                                <Button Name="ulogin" Content="Login" Width="70" FontSize="20" Margin="10" Click="ulogin_Click"  >
+
+                                </Button>
+
+                                <Button Name="ureset" Content="Reset" FontSize="20" Width="70" Margin="10" Click="ureset_Click" >
+
+                                </Button>
+
+                            </DockPanel>
+
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+
+
+                <TabItem Header="SignUp" Margin="31,-2,-51,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="70,-1,70,20">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblregtitle" Content="SIGN UP" HorizontalAlignment="Left" FontSize="35" FontFamily="Times New Roman" Width="155" VerticalAlignment="Top" Height="55"  />
+
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblfname" Content="First Name:"  FontSize="25" FontWeight="Bold" FontFamily="Times New Roman" HorizontalAlignment="Left" Width="200" VerticalAlignment="Top"  />
+                                <TextBox x:Name="txtfname" HorizontalAlignment="Right" Height="32" Width="137" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbllname" Content="Last Name:" Width="200"  FontSize="25" FontWeight="Bold" FontFamily="Times New Roman" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtlname" HorizontalAlignment="Right" Height="32" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbluname" Content="User Name:" HorizontalAlignment="Left"  FontSize="25" FontWeight="Bold" FontFamily="Times New Roman" VerticalAlignment="Top" Width="200" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtuname" HorizontalAlignment="Left" Height="32" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblpass" Content="Password:" HorizontalAlignment="Left"  FontSize="25" FontWeight="Bold" FontFamily="Times New Roman" VerticalAlignment="Top" Width="200" RenderTransformOrigin="2.116,1.896"/>
+                                <PasswordBox x:Name="cbpass" HorizontalAlignment="Left" Height="32"  VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblrepass" Content="Retype Password:" HorizontalAlignment="Left"  FontSize="25" FontWeight="Bold" FontFamily="Times New Roman" VerticalAlignment="Top" Width="200" RenderTransformOrigin="2.116,1.896"/>
+                                <PasswordBox x:Name="cbrepass" HorizontalAlignment="Left" Height="32" Width="137"/>
+                            </DockPanel>
+                            <DockPanel Height="56" Width="217">
+                                <Button Name="uregister" Content="Register" FontSize="20" HorizontalAlignment="Center" Width="78" Margin="10" Click="uregister_Click" ></Button>
+                                <Button Name="urreset" Content="Reset" Width="78" FontSize="20" Margin="10" Click="urreset_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="About Us" Margin="48,-2,-68,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid Margin="10,16,-10,-16" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+
+
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Perpetua Titling MT" FontSize="36" FontWeight="Bold" SnapsToDevicePixels="True" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Grid.ColumnSpan="2" Margin="10,49,249,57" Grid.RowSpan="2"/>
+                        <TextBlock  Grid.RowSpan="3" VerticalAlignment="Center"  FontFamily="Verdana"  FontSize="24" IsEnabled="False" TextWrapping="WrapWithOverflow" Margin="10,47,-5,8" Height="423" Grid.ColumnSpan="2" Text="The Indian Premier League (IPL), officially Vivo Indian Premier League for sponsorship reasons, is a professional Twenty20 cricket league in India contested during April and May of every year by teams representing Indian cities and some states.The league was founded by the Board of Control for Cricket in India (BCCI) in 2008, and is regarded as the brainchild of Lalit Modi, the founder and former commissioner of the league IPL has an exclusive window in ICC Future Tours Programme.The IPL is the most-attended cricket league in the world and in 2014 ranked sixth by average attendance among all sports leagues. In 2010, the IPL became the first sporting event in the world to be broadcast live on YouTube. The brand value of IPL in 2017 was US$5.3 billion, according to Duff and Phelps According to BCCI, the 2015 IPL season contributed ₹11.5 billion (US$182 million) to the GDP of the Indian economy." Foreground="#FF4D3F23"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Contact Us" Margin="65,-2,-84,-1" FontSize="16" FontFamily="Times New Roman">
+                    <Grid Margin="10,16,-10,-16" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+
+
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" FontFamily="Perpetua Titling MT" FontSize="36" FontWeight="Bold" SnapsToDevicePixels="True" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Grid.ColumnSpan="2" Margin="10,49,249,57" Grid.RowSpan="2"/>
+                        <Image Source="D:\project\IPL_Project\Images.jpg" Opacity="10" Grid.ColumnSpan="2" Margin="0,0,10,10" Grid.RowSpan="3"></Image>
+                        <Label Grid.Row="2" Foreground="DarkCyan" FontSize="25" Content="                   www.IPLt20@gmail.com         9848022338 " Grid.ColumnSpan="2" Margin="0,0,297,0" FontStyle="Italic"/>
+                    </Grid>
+
+                </TabItem>
+            </TabControl>
+
+        </DockPanel>
+    </Grid>
+
+</Window>

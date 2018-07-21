@@ -1,0 +1,922 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MayCHNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Id">
+          <Key>
+            <PropertyRef Name="idd" />
+          </Key>
+          <Property Name="idd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="30" />
+          <Property Name="pass" Type="varchar" MaxLength="30" />
+          <Property Name="role" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="MatchId" />
+          </Key>
+          <Property Name="MatchId" Type="int" Nullable="false" />
+          <Property Name="TeamOneId" Type="int" />
+          <Property Name="TeamTwoId" Type="int" />
+          <Property Name="VenueId" Type="int" />
+          <Property Name="PhotoGroupId" Type="int" />
+          <Property Name="MatchName" Type="varchar" MaxLength="30" />
+          <Property Name="TeamOneName" Type="varchar" MaxLength="30" />
+          <Property Name="TeamTwoName" Type="varchar" MaxLength="30" />
+          <Property Name="VenueName" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="MatchPhoto">
+          <Key>
+            <PropertyRef Name="MatchPhotoId" />
+          </Key>
+          <Property Name="MatchPhotoId" Type="int" Nullable="false" />
+          <Property Name="MatchId" Type="int" />
+          <Property Name="MPhoto" Type="image" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="NewsId" />
+          </Key>
+          <Property Name="NewsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Newsdate" Type="date" />
+          <Property Name="MatchId" Type="int" />
+          <Property Name="NewsDescription" Type="varchar" MaxLength="30" />
+          <Property Name="MatchPhotoId" Type="int" />
+          <Property Name="MatchName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerId" />
+          </Key>
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="TeamId" Type="int" />
+          <Property Name="PlayerName" Type="varchar" MaxLength="30" />
+          <Property Name="Age" Type="int" />
+          <Property Name="SpecialityId" Type="int" />
+          <Property Name="Role" Type="varchar" MaxLength="20" />
+          <Property Name="BattingStyle" Type="varchar" MaxLength="20" />
+          <Property Name="BowlingStyle" Type="varchar" MaxLength="20" />
+          <Property Name="BirthPlace" Type="varchar" MaxLength="20" />
+          <Property Name="TeamName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleId" />
+          </Key>
+          <Property Name="ScheduleId" Type="int" Nullable="false" />
+          <Property Name="MatchId" Type="int" />
+          <Property Name="Schedule_VenueId" Type="int" />
+          <Property Name="ScheduleDate" Type="date" />
+          <Property Name="StartTime" Type="varchar" MaxLength="10" />
+          <Property Name="EndTime" Type="varchar" MaxLength="10" />
+          <Property Name="MatchName" Type="varchar" MaxLength="50" />
+          <Property Name="VenueName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Speciality">
+          <Key>
+            <PropertyRef Name="SpecialityId" />
+          </Key>
+          <Property Name="SpecialityId" Type="int" Nullable="false" />
+          <Property Name="SpecialityDescription" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Stat">
+          <Key>
+            <PropertyRef Name="StatId" />
+          </Key>
+          <Property Name="StatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="int" />
+          <Property Name="Played" Type="int" />
+          <Property Name="Won" Type="int" />
+          <Property Name="Lost" Type="int" />
+          <Property Name="Tied" Type="int" />
+          <Property Name="NR" Type="int" />
+          <Property Name="NetRR" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Pts" Type="int" />
+          <Property Name="FromPoints" Type="int" />
+          <Property Name="TeamName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="TeamName" Type="varchar" MaxLength="30" />
+          <Property Name="HomeGround" Type="varchar" MaxLength="40" />
+          <Property Name="Owners" Type="varchar" MaxLength="30" />
+          <Property Name="LogoImage" Type="image" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MatchId" Type="int" />
+          <Property Name="TicketCategoryId" Type="int" />
+          <Property Name="Price" Type="int" />
+          <Property Name="NumberOfTickets" Type="varchar" MaxLength="20" />
+          <Property Name="MatchName" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TicketCategory">
+          <Key>
+            <PropertyRef Name="TicketCategoryId" />
+          </Key>
+          <Property Name="TicketCategoryId" Type="int" Nullable="false" />
+          <Property Name="TicketCategoryName" Type="varchar" MaxLength="30" />
+          <Property Name="TicketDescription" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="UserRolesId" />
+          </Key>
+          <Property Name="UserRolesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="30" />
+          <Property Name="Pass" Type="varchar" MaxLength="30" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" />
+          <Property Name="LastName" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="VenueId" />
+          </Key>
+          <Property Name="VenueId" Type="int" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="30" />
+          <Property Name="VenueDescription" Type="varchar" MaxLength="40" />
+          <Property Name="VenueName" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK__Schedule__Schedu__29971E47">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueId" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="Schedule_VenueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__UserI__45AA1867">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MatchId_FK">
+          <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="MatchPhoto" Type="Self.MatchPhoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="MatchPhoto">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="News_Matchid_FK">
+          <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="News" Type="Self.News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="News">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="News_MatchphotoId_FK">
+          <End Role="MatchPhoto" Type="Self.MatchPhoto" Multiplicity="0..1" />
+          <End Role="News" Type="Self.News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchPhoto">
+              <PropertyRef Name="MatchPhotoId" />
+            </Principal>
+            <Dependent Role="News">
+              <PropertyRef Name="MatchPhotoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Schedule_MatchId_FK">
+          <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SpecialityId_FK">
+          <End Role="Speciality" Type="Self.Speciality" Multiplicity="0..1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Speciality">
+              <PropertyRef Name="SpecialityId" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="SpecialityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TeamId_FK">
+          <End Role="Team" Type="Self.Team" Multiplicity="0..1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Ticket_MatchId_FK">
+          <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TicketCategoryId_FK">
+          <End Role="TicketCategory" Type="Self.TicketCategory" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketCategory">
+              <PropertyRef Name="TicketCategoryId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="TicketCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MayCHNModelStoreContainer">
+          <EntitySet Name="Id" EntityType="Self.Id" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Match" EntityType="Self.Match" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="MatchPhoto" EntityType="Self.MatchPhoto" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Speciality" EntityType="Self.Speciality" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Stat" EntityType="Self.Stat" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="TicketCategory" EntityType="Self.TicketCategory" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <EntitySet Name="Venue" EntityType="Self.Venue" Schema="IPL_MGMT_SYSTEM" store:Type="Tables" />
+          <AssociationSet Name="FK__Schedule__Schedu__29971E47" Association="Self.FK__Schedule__Schedu__29971E47">
+            <End Role="Venue" EntitySet="Venue" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__UserI__45AA1867" Association="Self.FK__UserRoles__UserI__45AA1867">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="MatchId_FK" Association="Self.MatchId_FK">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="MatchPhoto" EntitySet="MatchPhoto" />
+          </AssociationSet>
+          <AssociationSet Name="News_Matchid_FK" Association="Self.News_Matchid_FK">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="News" EntitySet="News" />
+          </AssociationSet>
+          <AssociationSet Name="News_MatchphotoId_FK" Association="Self.News_MatchphotoId_FK">
+            <End Role="MatchPhoto" EntitySet="MatchPhoto" />
+            <End Role="News" EntitySet="News" />
+          </AssociationSet>
+          <AssociationSet Name="Schedule_MatchId_FK" Association="Self.Schedule_MatchId_FK">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="SpecialityId_FK" Association="Self.SpecialityId_FK">
+            <End Role="Speciality" EntitySet="Speciality" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="TeamId_FK" Association="Self.TeamId_FK">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="Ticket_MatchId_FK" Association="Self.Ticket_MatchId_FK">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="TicketCategoryId_FK" Association="Self.TicketCategoryId_FK">
+            <End Role="TicketCategory" EntitySet="TicketCategory" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MayCHNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="MatchId" />
+          </Key>
+          <Property Name="MatchId" Type="Int32" Nullable="false" />
+          <Property Name="TeamOneId" Type="Int32" />
+          <Property Name="TeamTwoId" Type="Int32" />
+          <Property Name="VenueId" Type="Int32" />
+          <Property Name="PhotoGroupId" Type="Int32" />
+          <NavigationProperty Name="MatchPhotoes" Relationship="Self.MatchId_FK" FromRole="Match" ToRole="MatchPhoto" />
+          <NavigationProperty Name="News" Relationship="Self.News_Matchid_FK" FromRole="Match" ToRole="News" />
+          <NavigationProperty Name="Schedules" Relationship="Self.Schedule_MatchId_FK" FromRole="Match" ToRole="Schedule" />
+          <NavigationProperty Name="Tickets" Relationship="Self.Ticket_MatchId_FK" FromRole="Match" ToRole="Ticket" />
+          <Property Name="MatchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TeamOneName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TeamTwoName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VenueName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MatchPhoto">
+          <Key>
+            <PropertyRef Name="MatchPhotoId" />
+          </Key>
+          <Property Name="MatchPhotoId" Type="Int32" Nullable="false" />
+          <Property Name="MatchId" Type="Int32" />
+          <Property Name="MPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Match" Relationship="Self.MatchId_FK" FromRole="MatchPhoto" ToRole="Match" />
+          <NavigationProperty Name="News" Relationship="Self.News_MatchphotoId_FK" FromRole="MatchPhoto" ToRole="News" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="NewsId" />
+          </Key>
+          <Property Name="NewsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Newsdate" Type="DateTime" Precision="0" />
+          <Property Name="MatchId" Type="Int32" />
+          <Property Name="NewsDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MatchPhotoId" Type="Int32" />
+          <NavigationProperty Name="Match" Relationship="Self.News_Matchid_FK" FromRole="News" ToRole="Match" />
+          <NavigationProperty Name="MatchPhoto" Relationship="Self.News_MatchphotoId_FK" FromRole="News" ToRole="MatchPhoto" />
+          <Property Name="MatchName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerId" />
+          </Key>
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="TeamId" Type="Int32" />
+          <Property Name="PlayerName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="SpecialityId" Type="Int32" />
+          <NavigationProperty Name="Speciality" Relationship="Self.SpecialityId_FK" FromRole="Player" ToRole="Speciality" />
+          <NavigationProperty Name="Team" Relationship="Self.TeamId_FK" FromRole="Player" ToRole="Team" />
+          <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BattingStyle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BowlingStyle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BirthPlace" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TeamName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleId" />
+          </Key>
+          <Property Name="ScheduleId" Type="Int32" Nullable="false" />
+          <Property Name="MatchId" Type="Int32" />
+          <Property Name="Schedule_VenueId" Type="Int32" />
+          <Property Name="ScheduleDate" Type="DateTime" Precision="0" />
+          <Property Name="StartTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Match" Relationship="Self.Schedule_MatchId_FK" FromRole="Schedule" ToRole="Match" />
+          <NavigationProperty Name="Venue" Relationship="Self.FK__Schedule__Schedu__29971E47" FromRole="Schedule" ToRole="Venue" />
+          <Property Name="MatchName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VenueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Speciality">
+          <Key>
+            <PropertyRef Name="SpecialityId" />
+          </Key>
+          <Property Name="SpecialityId" Type="Int32" Nullable="false" />
+          <Property Name="SpecialityDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Players" Relationship="Self.SpecialityId_FK" FromRole="Speciality" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Stat">
+          <Key>
+            <PropertyRef Name="StatId" />
+          </Key>
+          <Property Name="StatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" />
+          <Property Name="Played" Type="Int32" />
+          <Property Name="Won" Type="Int32" />
+          <Property Name="Lost" Type="Int32" />
+          <Property Name="Tied" Type="Int32" />
+          <Property Name="NR" Type="Int32" />
+          <Property Name="NetRR" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Pts" Type="Int32" />
+          <Property Name="FromPoints" Type="Int32" />
+          <Property Name="TeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="TeamName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="HomeGround" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Owners" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LogoImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Players" Relationship="Self.TeamId_FK" FromRole="Team" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatchId" Type="Int32" />
+          <Property Name="TicketCategoryId" Type="Int32" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="NumberOfTickets" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Match" Relationship="Self.Ticket_MatchId_FK" FromRole="Ticket" ToRole="Match" />
+          <NavigationProperty Name="TicketCategory" Relationship="Self.TicketCategoryId_FK" FromRole="Ticket" ToRole="TicketCategory" />
+          <Property Name="MatchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TicketCategory">
+          <Key>
+            <PropertyRef Name="TicketCategoryId" />
+          </Key>
+          <Property Name="TicketCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="TicketCategoryName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TicketDescription" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tickets" Relationship="Self.TicketCategoryId_FK" FromRole="TicketCategory" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRolesId" />
+          </Key>
+          <Property Name="UserRolesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserRoles__UserI__45AA1867" FromRole="UserRoles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Pass" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRoles__UserI__45AA1867" FromRole="Users" ToRole="UserRoles" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="VenueId" />
+          </Key>
+          <Property Name="VenueId" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VenueDescription" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Schedules" Relationship="Self.FK__Schedule__Schedu__29971E47" FromRole="Venue" ToRole="Schedule" />
+          <Property Name="VenueName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="MatchId_FK">
+          <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="MatchPhoto" Type="Self.MatchPhoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="MatchPhoto">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="News_Matchid_FK">
+          <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="News" Type="Self.News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="News">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Schedule_MatchId_FK">
+          <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Ticket_MatchId_FK">
+          <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="News_MatchphotoId_FK">
+          <End Role="MatchPhoto" Type="Self.MatchPhoto" Multiplicity="0..1" />
+          <End Role="News" Type="Self.News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchPhoto">
+              <PropertyRef Name="MatchPhotoId" />
+            </Principal>
+            <Dependent Role="News">
+              <PropertyRef Name="MatchPhotoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SpecialityId_FK">
+          <End Role="Speciality" Type="Self.Speciality" Multiplicity="0..1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Speciality">
+              <PropertyRef Name="SpecialityId" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="SpecialityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TeamId_FK">
+          <End Role="Team" Type="Self.Team" Multiplicity="0..1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Schedule__Schedu__29971E47">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="0..1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueId" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="Schedule_VenueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TicketCategoryId_FK">
+          <End Role="TicketCategory" Type="Self.TicketCategory" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketCategory">
+              <PropertyRef Name="TicketCategoryId" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="TicketCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__UserI__45AA1867">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserRoles" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <EntitySet Name="Matches" EntityType="Self.Match" />
+          <EntitySet Name="MatchPhotoes" EntityType="Self.MatchPhoto" />
+          <EntitySet Name="News" EntityType="Self.News" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+          <EntitySet Name="Specialities" EntityType="Self.Speciality" />
+          <EntitySet Name="Stats" EntityType="Self.Stat" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+          <EntitySet Name="TicketCategories" EntityType="Self.TicketCategory" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Venues" EntityType="Self.Venue" />
+          <AssociationSet Name="MatchId_FK" Association="Self.MatchId_FK">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="MatchPhoto" EntitySet="MatchPhotoes" />
+          </AssociationSet>
+          <AssociationSet Name="News_Matchid_FK" Association="Self.News_Matchid_FK">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="News" EntitySet="News" />
+          </AssociationSet>
+          <AssociationSet Name="Schedule_MatchId_FK" Association="Self.Schedule_MatchId_FK">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="Ticket_MatchId_FK" Association="Self.Ticket_MatchId_FK">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="News_MatchphotoId_FK" Association="Self.News_MatchphotoId_FK">
+            <End Role="MatchPhoto" EntitySet="MatchPhotoes" />
+            <End Role="News" EntitySet="News" />
+          </AssociationSet>
+          <AssociationSet Name="SpecialityId_FK" Association="Self.SpecialityId_FK">
+            <End Role="Speciality" EntitySet="Specialities" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="TeamId_FK" Association="Self.TeamId_FK">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Schedule__Schedu__29971E47" Association="Self.FK__Schedule__Schedu__29971E47">
+            <End Role="Venue" EntitySet="Venues" />
+            <End Role="Schedule" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="TicketCategoryId_FK" Association="Self.TicketCategoryId_FK">
+            <End Role="TicketCategory" EntitySet="TicketCategories" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__UserI__45AA1867" Association="Self.FK__UserRoles__UserI__45AA1867">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <EntitySet Name="Ids" EntityType="MayCHNModel.Id" />
+        </EntityContainer>
+        <EntityType Name="Id">
+          <Key>
+            <PropertyRef Name="idd" />
+          </Key>
+          <Property Name="idd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MayCHNModelStoreContainer" CdmEntityContainer="Entities1">
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="MayCHNModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matches">
+            <EntityTypeMapping TypeName="MayCHNModel.Match">
+              <MappingFragment StoreEntitySet="Match">
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+                <ScalarProperty Name="TeamTwoName" ColumnName="TeamTwoName" />
+                <ScalarProperty Name="TeamOneName" ColumnName="TeamOneName" />
+                <ScalarProperty Name="MatchName" ColumnName="MatchName" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="TeamOneId" ColumnName="TeamOneId" />
+                <ScalarProperty Name="TeamTwoId" ColumnName="TeamTwoId" />
+                <ScalarProperty Name="VenueId" ColumnName="VenueId" />
+                <ScalarProperty Name="PhotoGroupId" ColumnName="PhotoGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchPhotoes">
+            <EntityTypeMapping TypeName="MayCHNModel.MatchPhoto">
+              <MappingFragment StoreEntitySet="MatchPhoto">
+                <ScalarProperty Name="MatchPhotoId" ColumnName="MatchPhotoId" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="MPhoto" ColumnName="MPhoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="MayCHNModel.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="MatchName" ColumnName="MatchName" />
+                <ScalarProperty Name="NewsId" ColumnName="NewsId" />
+                <ScalarProperty Name="Newsdate" ColumnName="Newsdate" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="NewsDescription" ColumnName="NewsDescription" />
+                <ScalarProperty Name="MatchPhotoId" ColumnName="MatchPhotoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="MayCHNModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="BirthPlace" ColumnName="BirthPlace" />
+                <ScalarProperty Name="BowlingStyle" ColumnName="BowlingStyle" />
+                <ScalarProperty Name="BattingStyle" ColumnName="BattingStyle" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="SpecialityId" ColumnName="SpecialityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="MayCHNModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="MayCHNModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+                <ScalarProperty Name="MatchName" ColumnName="MatchName" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="Schedule_VenueId" ColumnName="Schedule_VenueId" />
+                <ScalarProperty Name="ScheduleDate" ColumnName="ScheduleDate" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specialities">
+            <EntityTypeMapping TypeName="MayCHNModel.Speciality">
+              <MappingFragment StoreEntitySet="Speciality">
+                <ScalarProperty Name="SpecialityId" ColumnName="SpecialityId" />
+                <ScalarProperty Name="SpecialityDescription" ColumnName="SpecialityDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stats">
+            <EntityTypeMapping TypeName="MayCHNModel.Stat">
+              <MappingFragment StoreEntitySet="Stat">
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="StatId" ColumnName="StatId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="Played" ColumnName="Played" />
+                <ScalarProperty Name="Won" ColumnName="Won" />
+                <ScalarProperty Name="Lost" ColumnName="Lost" />
+                <ScalarProperty Name="Tied" ColumnName="Tied" />
+                <ScalarProperty Name="NR" ColumnName="NR" />
+                <ScalarProperty Name="NetRR" ColumnName="NetRR" />
+                <ScalarProperty Name="Pts" ColumnName="Pts" />
+                <ScalarProperty Name="FromPoints" ColumnName="FromPoints" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="MayCHNModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="HomeGround" ColumnName="HomeGround" />
+                <ScalarProperty Name="Owners" ColumnName="Owners" />
+                <ScalarProperty Name="LogoImage" ColumnName="LogoImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="MayCHNModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="MatchName" ColumnName="MatchName" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="TicketCategoryId" ColumnName="TicketCategoryId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="NumberOfTickets" ColumnName="NumberOfTickets" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketCategories">
+            <EntityTypeMapping TypeName="MayCHNModel.TicketCategory">
+              <MappingFragment StoreEntitySet="TicketCategory">
+                <ScalarProperty Name="TicketCategoryId" ColumnName="TicketCategoryId" />
+                <ScalarProperty Name="TicketCategoryName" ColumnName="TicketCategoryName" />
+                <ScalarProperty Name="TicketDescription" ColumnName="TicketDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="MayCHNModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="UserRolesId" ColumnName="UserRolesId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MayCHNModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venues">
+            <EntityTypeMapping TypeName="MayCHNModel.Venue">
+              <MappingFragment StoreEntitySet="Venue">
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+                <ScalarProperty Name="VenueId" ColumnName="VenueId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="VenueDescription" ColumnName="VenueDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ids">
+            <EntityTypeMapping TypeName="MayCHNModel.Id">
+              <MappingFragment StoreEntitySet="Id">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idd" ColumnName="idd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

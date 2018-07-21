@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="68286f3be84f4281a0d77a11b146260f" Name="Diagram1">
+        <EntityTypeShape EntityType="MayCHNModel.Login" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Match" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.MatchPhoto" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.News" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Player" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Role" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Schedule" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Speciality" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Stat" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Team" Width="1.5" PointX="5.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Ticket" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.TicketCategory" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.UserRole" Width="1.5" PointX="10" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.User" Width="1.5" PointX="7.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MayCHNModel.Venue" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="MayCHNModel.MatchId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.News_Matchid_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.Schedule_MatchId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.Ticket_MatchId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.News_MatchphotoId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.SpecialityId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.TeamId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.FK__Schedule__Schedu__29971E47" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.TicketCategoryId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MayCHNModel.FK__UserRoles__UserI__45AA1867" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MayCHNModel.Id" Width="1.5" PointX="10.375" PointY="10.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

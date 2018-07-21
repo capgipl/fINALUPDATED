@@ -1,0 +1,4056 @@
+Admin_DAL
+
+using Admin_Dal;
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Admin_Bal
+{
+    public class Admin_BAL
+    {
+        public void insert_Employee(User u)
+        {
+            Admin_DAL obj = new Admin_DAL();
+            obj.Add_Employee(u);
+
+        }
+
+        public List<User> view_Employee(int id)
+        {
+            var obje = new List<User>();
+            try
+            {
+                Admin_DAL obj = new Admin_DAL();
+
+                obje = obj.Search_Employee(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_Employee(int id)
+        {
+            int obje;
+            try
+            {
+
+                Admin_DAL obj = new Admin_DAL();
+
+                obje = obj.Delete_Employee(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+
+
+        public void update_Employee(User t)
+        {
+
+            try
+            {
+
+                Admin_DAL obj = new Admin_DAL();
+
+                obj.Update_Employee(t);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+
+        }
+    }
+}
+
+
+Admin DAL
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Admin_Dal
+{
+    public class Admin_DAL
+    {
+        public int Add_Employee(User Employee)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                User user = new User();
+
+                user.UserId = Employee.UserId;
+                user.UserName = Employee.UserName;
+                user.FirstName = Employee.FirstName;
+                user.LastName = Employee.LastName;
+                user.Password = Employee.Password;
+
+
+                UserRole userRole = new UserRole();
+                userRole.UserId = Employee.UserId;
+                userRole.RoleId = 1;
+                entity.UserRoles.Add(userRole);
+
+
+                entity.Users.Add(user);
+
+                entity.SaveChanges();
+
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<User> Search_Employee(int id)
+        {
+
+            var obj = new List<User>();
+            try
+            {
+                // not resolved
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Users
+                       where t.UserId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_Employee(int id)
+        {
+            var obj = new List<User>();
+            var uObj = new List<UserRole>();
+            try
+            {
+                // not
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.Users
+                       where t.UserId == id
+                       select t).ToList();
+
+                foreach (var t in obj)
+                {
+                    entity.Users.Remove(t);
+
+                }
+
+                uObj = (from r in entity.UserRoles
+                        where r.UserId == id
+                        select r).ToList();
+
+                foreach (var r in uObj)
+                {
+                    entity.UserRoles.Remove(r);
+
+                }
+
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_Employee(User x)
+        {
+            var obj = new List<User>();
+            try
+            {
+                //
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Users
+                       where t.UserId == x.UserId
+                       select t).ToList();
+                obj[0].UserName = x.UserName;
+                obj[0].FirstName = x.FirstName;
+                obj[0].LastName = x.LastName;
+                obj[0].Password = x.Password;
+
+
+                entity.SaveChanges();
+            }
+
+
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+    }
+}
+
+Customer BLL
+using Customer_DAL;
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Customer_BLL
+{
+    public class CUSTOMER_BLL
+    {
+        public void insert_Customer_Ticket(Ticket t)
+        {
+            try
+            {
+
+                CUSTOMER_DAL obj = new CUSTOMER_DAL();
+
+                obj.insert_Customer_Ticket(t);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+        }
+        public List<Stat> view_stat(int id)
+        {
+            var obje = new List<Stat>();
+            try
+            {
+                CUSTOMER_DAL obj = new CUSTOMER_DAL();
+
+                obje = obj.Search_Stat(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public List<News> view_news(int id)
+        {
+            var obje = new List<News>();
+            try
+            {
+                CUSTOMER_DAL obj = new CUSTOMER_DAL();
+                obje = obj.Search_News(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+    }
+}
+Customer DAL
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Customer_DAL
+{
+    public class CUSTOMER_DAL
+    {
+        public void insert_Customer_Ticket(Ticket t)
+        {
+
+            try
+            {
+                Entities entity = new Entities();
+                Ticket ticket = new Ticket()
+                {
+                    MatchId = t.MatchId,
+                    TicketCategory = t.TicketCategory,
+                    Price = t.Price
+                };
+                entity.Tickets.Add(ticket);
+
+                entity.SaveChanges();
+
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+
+        public List<Stat> Search_Stat(int id)
+        {
+
+            var obj = new List<Stat>();
+            try
+            {
+
+                Entities PracticeEntities = new Entities();
+
+                obj = (from t in PracticeEntities.Stats
+                       where t.TeamId == id
+                       select t).ToList();
+
+                PracticeEntities.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+        public List<News> Search_News(int id)
+        {
+
+            var obj = new List<News>();
+            try
+            {
+                Entities PracticeEntities = new Entities();
+
+                obj = (from t in PracticeEntities.News
+                       where t.MatchId == id
+                       select t).ToList();
+
+                PracticeEntities.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+    }
+}
+
+Employee BLL
+using IPL_DAL;
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IPL_BLL
+{
+    public class BLL
+    {
+        public void insert_Team(Team t)
+        {
+            DAL obj = new DAL();
+            obj.Add_Team(t);
+            //   obj.Delete_Team();
+
+        }
+
+        public List<Team> view_Team(int id)
+        {
+            var obje = new List<Team>();
+            try
+            {
+                DAL obj = new DAL();
+
+                obje = obj.Search_Team(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_Team(int id)
+        {
+            int obje;
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obje = obj.Delete_Team(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+
+
+        public void update_Team(Team t)
+        {
+
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obj.Update_Team(t);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+
+        }
+        public List<Team> GetAll_Team()
+        {
+            var obje = new List<Team>();
+            try
+            {
+                DAL obj = new DAL();
+                obje = obj.SelectAll_Team();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obje;
+        }
+
+        public void insert_Player(Player p)
+        {
+            DAL obj = new DAL();
+            obj.Add_Player(p);
+            //   obj.Delete_Team();
+
+        }
+
+        public List<Player> view_Player(int id)
+        {
+            var obje = new List<Player>();
+            try
+            {
+                DAL obj = new DAL();
+
+                obje = obj.Search_Player(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_Player(int id)
+        {
+            int obje;
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obje = obj.Delete_Player(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+
+
+        public void update_Player(Player p)
+        {
+
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obj.Update_Player(p);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+
+        }
+        public List<Player> GetAll_Player()
+        {
+            var obje = new List<Player>();
+            try
+            {
+                DAL obj = new DAL();
+                obje = obj.SelectAll_Player();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obje;
+        }
+
+
+        public void insert_Venue(Venue v)
+        {
+            DAL obj = new DAL();
+            obj.Add_Venue(v);
+            //   obj.Delete_Team();
+
+        }
+
+        public List<Venue> view_Venue(int id)
+        {
+            var obje = new List<Venue>();
+            try
+            {
+                DAL obj = new DAL();
+
+                obje = obj.Search_Venue(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_Venue(int id)
+        {
+            int obje;
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obje = obj.Delete_Venue(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+
+
+        public void update_Venue(Venue v)
+        {
+
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obj.Update_Venue(v);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+
+        }
+        public List<Venue> GetAll_venue()
+        {
+            var obje = new List<Venue>();
+            try
+            {
+                DAL obj = new DAL();
+                obje = obj.SelectAll_venue();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obje;
+        }
+
+
+
+        //match
+        public void insert_Match(Match m)
+        {
+            DAL obj = new DAL();
+            obj.Add_Match(m);
+            //   obj.Delete_Team();
+
+        }
+
+        public List<Match> view_Match(int id)
+        {
+            var obje = new List<Match>();
+            try
+            {
+                DAL obj = new DAL();
+
+                obje = obj.Search_Match(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_Match(int id)
+        {
+            int obje;
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obje = obj.Delete_Match(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+
+
+        public void update_Match(Match m)
+        {
+
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obj.Update_Match(m);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+        public List<Match> GetAll_Match()
+        {
+            var obje = new List<Match>();
+            try
+            {
+                DAL obj = new DAL();
+                obje = obj.SelectAll_Match();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obje;
+        }
+
+
+        //Schedule
+
+        public void insert_Schedule(Schedule s)
+        {
+            try
+            {
+                DAL obj = new DAL();
+                obj.Add_Schedule(s);
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+        }
+
+        public List<Schedule> view_Schedule(int id)
+        {
+            var obje = new List<Schedule>();
+            try
+            {
+                DAL obj = new DAL();
+
+                obje = obj.Search_Schedule(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_Schedule(int id)
+        {
+            int obje;
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obje = obj.Delete_Schedule(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+
+
+        public void update_Schedule(Schedule s)
+        {
+
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obj.Update_Schedule(s);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+        public List<Schedule> GetAll_Schedule()
+        {
+            var obje = new List<Schedule>();
+            try
+            {
+                DAL obj = new DAL();
+                obje = obj.SelectAll_Schedule();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obje;
+        }
+
+
+        //statistics
+        public void insert_Statistics(Stat s)
+        {
+            try
+            {
+                DAL obj = new DAL();
+                obj.Add_Statistics(s);
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+        }
+
+        public List<Stat> view_Statistics(int id)
+        {
+            var obje = new List<Stat>();
+            try
+            {
+                DAL obj = new DAL();
+
+                obje = obj.Search_Statistics(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_Statistics(int id)
+        {
+            int obje;
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obje = obj.Delete_Statistics(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+
+
+        public void update_Statistics(Stat s)
+        {
+
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obj.Update_Statistics(s);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        public List<Stat> GetAll_Stat()
+        {
+            var obje = new List<Stat>();
+            try
+            {
+                DAL obj = new DAL();
+                obje = obj.SelectAll_Statistics();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obje;
+        }
+
+
+        //TicketCategory
+
+        public void insert_Tc(TicketCategory s)
+        {
+            try
+            {
+                DAL obj = new DAL();
+                obj.Add_Tc(s);
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+        }
+
+        public List<TicketCategory> view_Tc(int id)
+        {
+            var obje = new List<TicketCategory>();
+            try
+            {
+                DAL obj = new DAL();
+
+                obje = obj.Search_Tc(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_Tc(int id)
+        {
+            int obje;
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obje = obj.Delete_Tc(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+
+
+        public void update_Tc(TicketCategory s)
+        {
+
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obj.Update_Tc(s);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        public List<TicketCategory> GetAll_Tc()
+        {
+            var obje = new List<TicketCategory>();
+            try
+            {
+                DAL obj = new DAL();
+                obje = obj.SelectAll_Tc();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obje;
+        }
+
+
+
+
+        //News
+        public void insert_News(News s)
+        {
+            try
+            {
+                DAL obj = new DAL();
+                obj.Add_News(s);
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+        }
+
+        public List<News> view_News(int id)
+        {
+            var obje = new List<News>();
+            try
+            {
+                DAL obj = new DAL();
+
+                obje = obj.Search_News(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return obje;
+
+        }
+
+        public int delete_News(int id)
+        {
+            int obje;
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obje = obj.Delete_News(id);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return 1;
+
+        }
+        public List<News> GetAll_News()
+        {
+            var obje = new List<News>();
+            try
+            {
+                DAL obj = new DAL();
+                obje = obj.SelectAll_News();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return obje;
+        }
+
+        public void update_News(News s)
+        {
+
+            try
+            {
+
+                DAL obj = new DAL();
+
+                obj.Update_News(s);
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+
+    }
+}
+IPL DAL
+
+
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IPL_DAL
+{
+    public class DAL
+    {
+        public int Add_Team(Team t)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                Team team = new Team()
+                {
+                    TeamId = t.TeamId,
+                    TeamName = t.TeamName,
+                    HomeGround = t.HomeGround,
+                    Owners = t.Owners
+                };
+                entity.Teams.Add(team);
+
+                entity.SaveChanges();
+
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<Team> Search_Team(int id)
+        {
+
+            var obj = new List<Team>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Teams
+                       where t.TeamId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_Team(int id)
+        {
+            var obj = new List<Team>();
+            try
+            {
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.Teams
+                       where t.TeamId == id
+                       select t).ToList();
+                foreach (var t in obj)
+                {
+                    entity.Teams.Remove(t);
+                }
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_Team(Team x)
+        {
+            var obj = new List<Team>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Teams
+                       where t.TeamId == x.TeamId
+                       select t).ToList();
+                obj[0].TeamName = x.TeamName;
+                obj[0].HomeGround = x.HomeGround;
+                obj[0].Owners = x.Owners;
+
+
+                entity.SaveChanges();
+            }
+
+
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+        public List<Team> SelectAll_Team()
+        {
+            var obj = new List<Team>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Teams
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Add_Player(Player p)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                Player player = new Player()
+                {
+                    PlayerId = p.PlayerId,
+                    PlayerName = p.PlayerName,
+                    Age = p.Age,
+                    TeamId = p.TeamId,
+
+                };
+                entity.Players.Add(player);
+
+                entity.SaveChanges();
+
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<Player> Search_Player(int id)
+        {
+
+            var obj = new List<Player>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Players
+                       where t.PlayerId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_Player(int id)
+        {
+            var obj = new List<Player>();
+            try
+            {
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.Players
+                       where t.PlayerId == id
+                       select t).ToList();
+                foreach (var t in obj)
+                {
+                    entity.Players.Remove(t);
+                }
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_Player(Player x)
+        {
+            var obj = new List<Player>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Players
+                       where t.PlayerId == x.PlayerId
+                       select t).ToList();
+                obj[0].PlayerName = x.PlayerName;
+
+                obj[0].TeamId = x.TeamId;
+                obj[0].Age = x.Age;
+
+
+
+                entity.SaveChanges();
+            }
+
+
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+        public List<Player> SelectAll_Player()
+        {
+            var obj = new List<Player>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Players
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+
+
+        //Venue 
+
+        public int Add_Venue(Venue v)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                Venue venue = new Venue()
+                {
+                    VenueId = v.VenueId,
+                    Location = v.Location,
+                    VenueDescription = v.VenueDescription
+
+                };
+                entity.Venues.Add(venue);
+
+                entity.SaveChanges();
+
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<Venue> Search_Venue(int id)
+        {
+
+            var obj = new List<Venue>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Venues
+                       where t.VenueId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_Venue(int id)
+        {
+            var obj = new List<Venue>();
+            try
+            {
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.Venues
+                       where t.VenueId == id
+                       select t).ToList();
+                foreach (var t in obj)
+                {
+                    entity.Venues.Remove(t);
+                }
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_Venue(Venue x)
+        {
+            var obj = new List<Venue>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Venues
+                       where t.VenueId == x.VenueId
+                       select t).ToList();
+                obj[0].VenueId = x.VenueId;
+
+                obj[0].Location = x.Location;
+                obj[0].VenueDescription = x.VenueDescription;
+
+
+
+                entity.SaveChanges();
+            }
+
+
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+        public List<Venue> SelectAll_venue()
+        {
+            var obj = new List<Venue>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Venues
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+
+
+        //match
+
+        public int Add_Match(Match m)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                Match match = new Match()
+                {
+                    MatchId = m.MatchId,
+                    TeamOneId = m.TeamOneId,
+                    TeamTwoId = m.TeamTwoId,
+                    VenueId = m.VenueId
+
+                };
+                entity.Matches.Add(match);
+
+                entity.SaveChanges();
+
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<Match> Search_Match(int id)
+        {
+
+            var obj = new List<Match>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Matches
+                       where t.MatchId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_Match(int id)
+        {
+            var obj = new List<Match>();
+            try
+            {
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.Matches
+                       where t.MatchId == id
+                       select t).ToList();
+                foreach (var t in obj)
+                {
+                    entity.Matches.Remove(t);
+                }
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_Match(Match x)
+        {
+            var obj = new List<Match>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Matches
+                       where t.MatchId == x.MatchId
+                       select t).ToList();
+
+                obj[0].MatchId = x.MatchId;
+
+                obj[0].TeamOneId = x.TeamOneId;
+                obj[0].TeamTwoId = x.TeamTwoId;
+
+                obj[0].VenueId = x.VenueId;
+
+                entity.SaveChanges();
+            }
+
+
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+
+        public List<Match> SelectAll_Match()
+        {
+            var obj = new List<Match>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Matches
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+
+
+        //schedule
+        public int Add_Schedule(Schedule s)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                Schedule sch = new Schedule()
+                {
+                    ScheduleId = s.ScheduleId,
+                    MatchId = s.MatchId,
+                    Schedule_VenueId = s.Schedule_VenueId,
+                    ScheduleDate = s.ScheduleDate,
+                    StartTime = s.StartTime,
+                    EndTime = s.EndTime
+
+                };
+                entity.Schedules.Add(sch);
+
+                entity.SaveChanges();
+
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<Schedule> Search_Schedule(int id)
+        {
+
+            var obj = new List<Schedule>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Schedules
+                       where t.ScheduleId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_Schedule(int id)
+        {
+            var obj = new List<Schedule>();
+            try
+            {
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.Schedules
+                       where t.ScheduleId == id
+                       select t).ToList();
+                foreach (var t in obj)
+                {
+                    entity.Schedules.Remove(t);
+                }
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_Schedule(Schedule x)
+        {
+            var obj = new List<Schedule>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Schedules
+                       where t.ScheduleId == x.ScheduleId
+                       select t).ToList();
+
+                obj[0].ScheduleId = x.ScheduleId;
+
+                obj[0].MatchId = x.MatchId;
+                obj[0].Schedule_VenueId = x.Schedule_VenueId;
+
+                obj[0].ScheduleDate = x.ScheduleDate;
+                obj[0].StartTime = x.StartTime;
+                obj[0].EndTime = x.EndTime;
+
+                entity.SaveChanges();
+            }
+
+
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+
+        public List<Schedule> SelectAll_Schedule()
+        {
+            var obj = new List<Schedule>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Schedules
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+
+        //statistics
+        public int Add_Statistics(Stat s)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                Stat st = new Stat()
+                {
+                    TeamId = s.TeamId,
+                    Played = s.Played,
+                    Won = s.Won,
+                    Lost = s.Lost,
+                    Tied = s.Tied,
+                    NR = s.NR,
+                    NetRR = s.NetRR,
+                    Pts = s.Pts,
+                    FromPoints = s.FromPoints
+                };
+                entity.Stats.Add(st);
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<Stat> Search_Statistics(int id)
+        {
+
+            var obj = new List<Stat>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Stats
+                       where t.TeamId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_Statistics(int id)
+        {
+            var obj = new List<Stat>();
+            try
+            {
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.Stats
+                       where t.TeamId == id
+                       select t).ToList();
+                foreach (var t in obj)
+                {
+                    entity.Stats.Remove(t);
+                }
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_Statistics(Stat x)
+        {
+            var obj = new List<Stat>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Stats
+                       where t.TeamId == x.TeamId
+                       select t).ToList();
+
+                obj[0].TeamId = x.TeamId;
+
+                obj[0].Played = x.Played;
+                obj[0].Won = x.Won;
+                obj[0].Lost = x.Lost;
+                obj[0].Tied = x.Tied;
+                obj[0].NR = x.NR;
+                obj[0].NetRR = x.NetRR;
+                obj[0].Pts = x.Pts;
+                obj[0].FromPoints = x.FromPoints;
+
+                entity.SaveChanges();
+            }
+
+
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+        public List<Stat> SelectAll_Statistics()
+        {
+            var obj = new List<Stat>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.Stats
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+
+        //TicketCategory
+        public int Add_Tc(TicketCategory s)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                TicketCategory st = new TicketCategory()
+                {
+                    TicketCategoryId = s.TicketCategoryId,
+                    TicketCategoryName = s.TicketCategoryName,
+                    TicketDescription = s.TicketDescription
+                };
+                entity.TicketCategories.Add(st);
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<TicketCategory> Search_Tc(int id)
+        {
+
+            var obj = new List<TicketCategory>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.TicketCategories
+                       where t.TicketCategoryId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_Tc(int id)
+        {
+            var obj = new List<TicketCategory>();
+            try
+            {
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.TicketCategories
+                       where t.TicketCategoryId == id
+                       select t).ToList();
+                foreach (var t in obj)
+                {
+                    entity.TicketCategories.Remove(t);
+                }
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_Tc(TicketCategory x)
+        {
+            var obj = new List<TicketCategory>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.TicketCategories
+                       where t.TicketCategoryId == x.TicketCategoryId
+                       select t).ToList();
+
+                obj[0].TicketCategoryId = x.TicketCategoryId;
+                obj[0].TicketCategoryName = x.TicketCategoryName;
+                obj[0].TicketDescription = x.TicketDescription;
+
+                entity.SaveChanges();
+            }
+
+
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+        public List<TicketCategory> SelectAll_Tc()
+        {
+            var obj = new List<TicketCategory>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.TicketCategories
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+
+
+        //news
+        public int Add_News(News s)
+        {
+            try
+            {
+                Entities entity = new Entities();
+                News st = new News()
+                {
+                    MatchId = s.MatchId,
+                    NewsDescription = s.NewsDescription
+                };
+                entity.News.Add(st);
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+            return 1;
+        }
+
+        public List<News> Search_News(int id)
+        {
+
+            var obj = new List<News>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.News
+                       where t.MatchId == id
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+        public int Delete_News(int id)
+        {
+            var obj = new List<News>();
+            try
+            {
+                Entities entity = new Entities();
+
+
+                obj = (from t in entity.News
+                       where t.MatchId == id
+                       select t).ToList();
+                foreach (var t in obj)
+                {
+                    entity.News.Remove(t);
+                }
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return 1;
+        }
+
+        public void Update_News(News x)
+        {
+            var obj = new List<News>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.News
+                       where t.MatchId == x.MatchId
+                       select t).ToList();
+                obj[0].NewsDescription = x.NewsDescription;
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+        }
+        public List<News> SelectAll_News()
+        {
+            var obj = new List<News>();
+            try
+            {
+
+                Entities entity = new Entities();
+
+                obj = (from t in entity.News
+                       select t).ToList();
+
+                entity.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+
+            }
+
+            return obj;
+        }
+
+    }
+}
+
+ADMin xaml
+
+<Window x:Class="Presentation_Layer.Admin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation_Layer"
+        mc:Ignorable="d"
+        Title="Admin" Height="540.226" Width="492.857">
+    <Grid>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Label x:Name="lblTitle" Content="IPL MANAGEMENT SYSTEM" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="25"  VerticalAlignment="Top" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Margin="276,5,81,5" Width="392">
+                <Label x:Name="lblCopy" Content="All CopyRights Reserved.2018!! " Height="41" Width="587"/>
+            </StackPanel>
+            <TabControl Name="tcSample" FontSize="18" >
+                <TabItem Header="Home" Margin="-2,-2,-45,-1" FontSize="16" FontFamily="Times New Roman"/>
+                <TabItem Header="Employee" FontSize="16" FontFamily="Times New Roman" Margin="31,-2,-77,-1">
+
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblid" Content="Employee ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <TextBox x:Name="txtid" HorizontalAlignment="Right" Height="23" Width="137"  VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblname" Content="User Name:" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtname" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblfirstname" Content="First Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtfirstname" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbllastname" Content="LastName:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtlastname" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblpasssword" Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.116,1.896"/>
+                                <PasswordBox x:Name="txtpassword" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="137"></PasswordBox>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button Name="UempInsert" Content="Insert" Width="70" Margin="10" Click="UempInsert_Click"></Button>
+
+                                <Button Name="btnempUpdate" Content="Update" Width="70" Margin="10" Click="btnempUpdate_Click"></Button>
+
+                                <Button Name="btnempDelete" Content="Delete" Width="70" Margin="10" Click="btnempDelete_Click"></Button>
+
+                                <Button Name="btnempview" Content="View" Width="70" Margin="10" Click="btnempview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="user" Margin="0,-2,-77,-1" FontSize="16" FontFamily="Times New Roman" HorizontalAlignment="Right" Width="102">
+                    <DockPanel Margin="70,70">
+                        <StackPanel Orientation="Vertical" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                            <Button x:Name="btnEmployee" Content="Employee View" Width="70" Margin="10" Click="btnEmployee_Click"/>
+                            <Button x:Name="btnCustomer" Content="Customer View" Width="70" Margin="10" RenderTransformOrigin="-0.797,1.261" Click="btnCustomer_Click"/>
+                            <Label x:Name="lblusertitle" Content="--------USER DETAILS---------" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="25"  VerticalAlignment="Top" />
+                            <DataGrid x:Name="dtgrid" Width="auto" Height="auto" AutoGenerateColumns="True" />
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+            </TabControl>
+
+        </DockPanel>
+    </Grid>
+</Window>
+
+xaml.cs
+using Admin_Bal;
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace Presentation_Layer
+{
+    /// <summary>
+    /// Interaction logic for Admin.xaml
+    /// </summary>
+    public partial class Admin : Window
+    {
+        public Admin()
+        {
+            InitializeComponent();
+        }
+
+        private void UempInsert_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            try
+            {
+                User t = new User();
+                t.UserId = int.Parse(txtid.Text);
+                t.UserName = txtname.Text;
+                t.FirstName = txtfirstname.Text;
+                t.LastName = txtlastname.Text;
+                t.Password = txtpassword.Password;
+
+                Admin_BAL obj = new Admin_BAL();
+                obj.insert_Employee(t);
+                MessageBox.Show("Inserted Successfully");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        // update..
+        private void btnempUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                User t = new User();
+                t.UserId = int.Parse(txtid.Text);
+                t.UserName = txtname.Text;
+                t.FirstName = txtfirstname.Text;
+                t.LastName = txtlastname.Text;
+                t.Password = txtpassword.Password;
+
+                Admin_BAL obj = new Admin_BAL();
+                obj.update_Employee(t);
+                MessageBox.Show("Updated Successfully");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void btnempDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+
+            int id = int.Parse(txtid.Text);
+            Admin_BAL obj = new Admin_BAL();
+            obje = obj.delete_Employee(id);
+            MessageBox.Show("Deleted Successfully");
+        }
+
+        private void btnempview_Click(object sender, RoutedEventArgs e)
+        {
+            var obje = new List<User>();
+
+            int search = int.Parse(txtid.Text);
+            Admin_BAL obj = new Admin_BAL();
+            obje = obj.view_Employee(search);
+            txtname.Text = obje[0].UserName;
+            txtfirstname.Text = obje[0].FirstName;
+            txtlastname.Text = obje[0].LastName;
+            txtpassword.Password = obje[0].Password;
+
+        }
+
+        private void btnEmployee_Click(object sender, RoutedEventArgs e)
+        {
+
+            Entities entity = new Entities();
+            var query = from p in entity.Users
+                        from q in entity.UserRoles
+                        where p.UserId == (q.UserId)
+                           && q.RoleId == 1
+                        select new
+                        {
+                            p.UserId,
+                            p.UserName,
+                            p.FirstName,
+                            p.LastName
+                        };
+
+            dtgrid.ItemsSource = query.ToList();
+        }
+
+        private void btnCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            var query = from p in entity.Users
+                        from q in entity.UserRoles
+                        where p.UserId == (q.UserId)
+                           && q.RoleId == 2
+                        select new
+                        {
+                            p.UserId,
+                            p.UserName,
+                            p.FirstName,
+                            p.LastName
+                        };
+
+            dtgrid.ItemsSource = query.ToList();
+        }
+    }
+}
+
+Customer xaml
+
+<Window x:Class="Presentation_Layer.Customer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation_Layer"
+        mc:Ignorable="d"
+        Title="Customer" Height="711.73" Width="1013.535" Initialized="Window_Initialized">
+    <Grid>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Label x:Name="lblTitle" Content="IPL MANAGEMENT SYSTEM" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="25"  VerticalAlignment="Top" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="144,5,0,5" HorizontalAlignment="Left" Width="315">
+                <Label x:Name="lblCopy" Content="               All CopyRights Reserved.2018!!" Height="41" Width="318" RenderTransformOrigin="0.591,0.557"/>
+            </StackPanel>
+            <TabControl Name="tcSample" FontSize="18" RenderTransformOrigin="0.593,0.549" >
+                <TabItem Header="Home" FontSize="16" FontFamily="Times New Roman" >
+                </TabItem>
+                <TabItem Header="Player Info" FontSize="16" FontFamily="Times New Roman" Margin="-2,-2,-36,-1">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal"/>
+
+                        </StackPanel>
+
+
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <DataGrid Name="dgteam2" Width="423" Height="265" AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Player ID" Binding="{Binding Path=PlayerId}" IsReadOnly="True" Width="80"/>
+                                        <DataGridTextColumn Header="Team ID" Binding="{Binding Path=TeamId}" IsReadOnly="True" Width="120"/>
+                                        <DataGridTextColumn Header="Player Name" Binding="{Binding Path=PlayerName}" IsReadOnly="True" Width="100"/>
+                                        <DataGridTextColumn Header="Age" Binding="{Binding Path=Age}" IsReadOnly="True" Width="120"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="Tickets" Margin="27,-2,-51,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="50,50">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="299" Margin="0,113,0,46" Width="434">
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltcnt" Content="Available Tickets:" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtcnt" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltid" Content="No of Tickets" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txttid" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltcat" Content="Ticket Category:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.281,1.122"/>
+                                <ComboBox x:Name="txttcat" HorizontalAlignment="Left" Height="23"  VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblmatchname" Content="Match No:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtmaname" HorizontalAlignment="Left" Height="23"   VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltprice" Content="Price:" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txttpice" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" TextInput="txttpice_TextInput"/>
+                            </DockPanel>
+                            <DockPanel Height="60" Margin="0,0,-47,0">
+                                <Button Name="tBook" Content="Book" Width="70" Margin="10" Click="tBook_Click"></Button>
+
+                                <Button Name="preset" Content="Reset" Width="70" Margin="10" Click="preset_Click"></Button>
+
+                                <Button Name="pview" IsEnabled="False" Content="View Ticket"  Width="92" Margin="10" Click="pview_Click"></Button>
+                                <Button Name="calculate_price"  Content="View Price"  Width="87" Margin="10" Click="calculate_price_Click" RenderTransformOrigin="0.092,0.517"></Button>
+
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Result" Margin="48,-2,-68,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="50,50">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltmid" Content="Team ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <TextBox x:Name="txttmid" HorizontalAlignment="Right" Height="23" Width="137" TextWrapping="Wrap" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblplayed" Content="Played:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtplayed" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblwon" Content="Won:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtwon" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbllost" Content="Lost:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtlost" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltied" Content="Tied:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txttied" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnr" Content="NR:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtnr" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnetrr" Content="NetRR:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtnetrr" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblpts" Content="PTS:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtpts" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblfpts" Content="FromPTS:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtfpts" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Button x:Name="btnsub" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896">
+                                    <Button x:Name="Submit" Content="Submit" Width="75" Click="Submit_Click"/>
+                                </Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+
+                <TabItem Header="News"  FontSize="16" FontFamily="Times New Roman" Margin="65,-2,-101,-1">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="Matchid" Content="Match ID" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtnews" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="125"  />
+                            </DockPanel>
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnewsdesc" Content="News Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtnewsdes" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="124" TextWrapping="Wrap" VerticalAlignment="Top" Width="283"  />
+
+                            </DockPanel>
+                            <DockPanel>
+                                <Button x:Name="submit" Content="submit" Click="submit_Click_1"></Button>
+                            </DockPanel>
+
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+
+        </DockPanel>
+    </Grid>
+</Window>
+
+
+Xaml.cs
+<Window x:Class="Presentation_Layer.Customer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation_Layer"
+        mc:Ignorable="d"
+        Title="Customer" Height="711.73" Width="1013.535" Initialized="Window_Initialized">
+    <Grid>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Label x:Name="lblTitle" Content="IPL MANAGEMENT SYSTEM" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="25"  VerticalAlignment="Top" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="144,5,0,5" HorizontalAlignment="Left" Width="315">
+                <Label x:Name="lblCopy" Content="               All CopyRights Reserved.2018!!" Height="41" Width="318" RenderTransformOrigin="0.591,0.557"/>
+            </StackPanel>
+            <TabControl Name="tcSample" FontSize="18" RenderTransformOrigin="0.593,0.549" >
+                <TabItem Header="Home" FontSize="16" FontFamily="Times New Roman" >
+                </TabItem>
+                <TabItem Header="Player Info" FontSize="16" FontFamily="Times New Roman" Margin="-2,-2,-36,-1">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal"/>
+
+                        </StackPanel>
+
+
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <DataGrid Name="dgteam2" Width="423" Height="265" AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Player ID" Binding="{Binding Path=PlayerId}" IsReadOnly="True" Width="80"/>
+                                        <DataGridTextColumn Header="Team ID" Binding="{Binding Path=TeamId}" IsReadOnly="True" Width="120"/>
+                                        <DataGridTextColumn Header="Player Name" Binding="{Binding Path=PlayerName}" IsReadOnly="True" Width="100"/>
+                                        <DataGridTextColumn Header="Age" Binding="{Binding Path=Age}" IsReadOnly="True" Width="120"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="Tickets" Margin="27,-2,-51,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="50,50">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="299" Margin="0,113,0,46" Width="434">
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltcnt" Content="Available Tickets:" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtcnt" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltid" Content="No of Tickets" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txttid" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltcat" Content="Ticket Category:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.281,1.122"/>
+                                <ComboBox x:Name="txttcat" HorizontalAlignment="Left" Height="23"  VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblmatchname" Content="Match No:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtmaname" HorizontalAlignment="Left" Height="23"   VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltprice" Content="Price:" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txttpice" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" TextInput="txttpice_TextInput"/>
+                            </DockPanel>
+                            <DockPanel Height="60" Margin="0,0,-47,0">
+                                <Button Name="tBook" Content="Book" Width="70" Margin="10" Click="tBook_Click"></Button>
+
+                                <Button Name="preset" Content="Reset" Width="70" Margin="10" Click="preset_Click"></Button>
+
+                                <Button Name="pview" IsEnabled="False" Content="View Ticket"  Width="92" Margin="10" Click="pview_Click"></Button>
+                                <Button Name="calculate_price"  Content="View Price"  Width="87" Margin="10" Click="calculate_price_Click" RenderTransformOrigin="0.092,0.517"></Button>
+
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Result" Margin="48,-2,-68,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="50,50">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltmid" Content="Team ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <TextBox x:Name="txttmid" HorizontalAlignment="Right" Height="23" Width="137" TextWrapping="Wrap" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblplayed" Content="Played:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtplayed" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblwon" Content="Won:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtwon" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbllost" Content="Lost:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtlost" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltied" Content="Tied:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txttied" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnr" Content="NR:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtnr" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnetrr" Content="NetRR:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtnetrr" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblpts" Content="PTS:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtpts" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblfpts" Content="FromPTS:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtfpts" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Button x:Name="btnsub" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896">
+                                    <Button x:Name="Submit" Content="Submit" Width="75" Click="Submit_Click"/>
+                                </Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+
+                <TabItem Header="News"  FontSize="16" FontFamily="Times New Roman" Margin="65,-2,-101,-1">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="Matchid" Content="Match ID" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtnews" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="125"  />
+                            </DockPanel>
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnewsdesc" Content="News Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtnewsdes" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" Height="124" TextWrapping="Wrap" VerticalAlignment="Top" Width="283"  />
+
+                            </DockPanel>
+                            <DockPanel>
+                                <Button x:Name="submit" Content="submit" Click="submit_Click_1"></Button>
+                            </DockPanel>
+
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+
+        </DockPanel>
+    </Grid>
+</Window>
+
+Xaml.cs
+
+using Customer_BLL;
+using IPL_BLL;
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace Presentation_Layer
+{
+    /// <summary>
+    /// Interaction logic for Customer.xaml
+    /// </summary>
+    public partial class Customer : Window
+    {
+       static int[,] count = new int[10, 10];
+        public Customer()
+        {
+            InitializeComponent();
+            Ticket_category();
+
+
+        }
+        public void Ticket_category()
+        {
+            Ticket t = new Ticket();
+            Entities entity = new Entities();
+            txttcat.ItemsSource = (from p in entity.TicketCategories select p.TicketCategoryName).ToList();
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+
+                    count[i, j] = 100;
+                }
+            }
+
+            
+           
+           
+
+            txtcnt.Text = count[0,0].ToString();
+
+        }
+        private void dgteam2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            Entities entity = new Entities();
+            List<Player> Player = (from p in entity.Players select p).ToList();
+            dgteam2.ItemsSource = Player;
+
+        }
+
+        private void pview_Click(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Category: " + txttcat.SelectedItem);
+            sb.AppendLine("\n No. of Tickets" + txttid.Text);
+            sb.AppendLine("\n Price :" + txttpice.Text);
+            MessageBox.Show(sb.ToString());
+        }
+
+        private void TabItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            
+        }
+
+        private void TabItem_ContextMenuOpening_1(object sender, ContextMenuEventArgs e)
+        {
+
+        }
+
+        private void txttcat_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        
+        private void tBook_Click(object sender, RoutedEventArgs e)
+        {
+           
+            int index = 0, index_1 = 0;
+            Entities entity = new Entities();
+            try
+            {
+                Ticket t = new Ticket();
+                TicketCategory tc = new TicketCategory();
+                t.TicketCategoryId = txttcat.SelectedIndex;
+                t.MatchId = int.Parse(txtmaname.Text);
+                
+                int x = txttcat.SelectedIndex;
+                //MessageBox.Show(x.ToString());
+                txttpice.Text = ((x+1) * 1000 * int.Parse(txttid.Text)).ToString();
+
+
+
+                t.Price = int.Parse(txttpice.Text);
+
+                //txtcnt.Text = (int.Parse(txtcnt.Text)-int.Parse(txttid.Text)).ToString();
+
+                CUSTOMER_BLL obj = new CUSTOMER_BLL();
+                obj.insert_Customer_Ticket(t);
+                //int[,] count = new int[10, 10];
+               
+
+
+                 index = txttcat.SelectedIndex;
+                 index_1 = int.Parse(txtmaname.Text);
+                //MessageBox.Show((count[index + 1, index_1] - int.Parse(txttid.Text)).ToString());
+                count[index + 1, index_1] = count[index + 1, index_1] - int.Parse(txttid.Text);
+               txtcnt.Text = (count[index+1, index_1]).ToString();
+                pview.IsEnabled = true;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void preset_Click(object sender, RoutedEventArgs e)
+        {
+            txtcnt.Text = "100";
+            txttid.Text = null;
+            txttcat.Text = null;
+            txtmaname.Text = null;
+            txttpice.Text = null;
+
+        }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+            var data = new List<Stat>();
+            int search = int.Parse(txttmid.Text);
+            CUSTOMER_BLL obje = new CUSTOMER_BLL();
+            data = obje.view_stat(search);
+            txtplayed.Text = (data[0].Played).ToString();
+            txtwon.Text = (data[0].Won).ToString();
+            txtlost.Text = (data[0].Lost).ToString();
+            txttied.Text = (data[0].Tied).ToString();
+            txtnr.Text = (data[0].NR).ToString();
+            txtnetrr.Text = (data[0].NetRR).ToString();
+            txtpts.Text = (data[0].Pts).ToString();
+            txtfpts.Text = (data[0].FromPoints).ToString();
+
+
+
+
+        }
+
+
+
+        private void tcSample_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void submit_Click_1(object sender, RoutedEventArgs e)
+        {
+            int x = int.Parse(txtnews.Text);
+            var data = new List<News>();
+            BLL obje = new BLL();
+            data = obje.view_News(x);
+            txtnewsdes.Text = data[0].NewsDescription;
+
+        }
+
+        private void calculate_price_Click(object sender, RoutedEventArgs e)
+        {
+            if (txttcat.SelectedIndex >= 0 && int.Parse(txtmaname.Text) > 0 && int.Parse(txttid.Text) > 0)
+            {
+                Ticket t = new Ticket();
+                t.TicketCategoryId = txttcat.SelectedIndex;
+                t.MatchId = int.Parse(txtmaname.Text);
+
+                int x = txttcat.SelectedIndex;
+                //MessageBox.Show(x.ToString());
+                txttpice.Text = ((x + 1) * 1000 * int.Parse(txttid.Text)).ToString();
+            }
+        }
+
+        private void txttpice_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            
+        }
+    }
+}
+
+Emp xaml
+
+<Window x:Class="Presentation_Layer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation_Layer"
+        mc:Ignorable="d"
+        Title="Employee" Height="646.154" Width="816.258" Loaded="Window_Loaded">
+    <Grid>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Label x:Name="lblTitle" Content="IPL MANAGEMENT SYSTEM" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="25"  VerticalAlignment="Top" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Margin="276,5,81,5" Width="392">
+                <Label x:Name="lblCopy" Content="All CopyRights Reserved.2018!! " Height="41" Width="587"/>
+            </StackPanel>
+            <TabControl Name="tcSample" FontSize="18" >
+                <TabItem Header="Home" FontSize="16" FontFamily="Times New Roman" >
+                </TabItem>
+                <TabItem Header="Teams" FontSize="16" FontFamily="Times New Roman" Margin="-2,-2,-36,-1">
+                    <DockPanel Margin="70,70">
+
+
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="thead" Content="TEAM DETAILS:" HorizontalAlignment="Left" FontSize="25" FontFamily="Times New Roman" Width="202" VerticalAlignment="Top" Height="66"  />
+
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblid" Content="Team ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <ComboBox x:Name="cbteid"  HorizontalAlignment="Right" Height="23" Width="137"  VerticalAlignment="Top"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblname" Content="Team Name:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtname" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblhg" Content="Home Ground:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txthg" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblowner" Content="Owner:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtowner" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button Name="tInsert" Content="Add New" Width="70" Margin="10" Click="tInsert_Click" ></Button>
+
+                                <Button Name="tUpdate" Content="Update" Width="70" Margin="10" Click="btnUpd_Click"></Button>
+
+                                <Button Name="tDelete" Content="Delete" Width="70" Margin="10" Click="btnDel_Click"></Button>
+
+                                <Button Name="tview" Content="View" Width="70" Margin="10" Click="tview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="Players" Margin="31,-2,-51,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblpid" Content="Player ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <ComboBox x:Name="cbpid" HorizontalAlignment="Right" Height="23" Width="137" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltid" Content="Team ID:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <ComboBox x:Name="cbtid" HorizontalAlignment="Right" Height="23"  VerticalAlignment="Top" Width="137" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblpname" Content="Player Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtpname" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblage" Content="Age:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtage" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
+                            <DockPanel>
+                                <Button Name="pInsert" Content="Add New" Width="70" Margin="10" Click="pInsert_Click"></Button>
+
+                                <Button Name="pUpdate" Content="Update" Width="70" Margin="10" Click="pUpdate_Click"></Button>
+
+                                <Button Name="pDelete" Content="Delete" Width="70" Margin="10" Click="pDelete_Click"></Button>
+
+                                <Button Name="pview" Content="View" Width="70" Margin="10" Click="pview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Matches" Margin="48,-2,-68,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblmid" Content="Match ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <ComboBox x:Name="cbmid" HorizontalAlignment="Right" Height="23" Width="137" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblteamoneid" Content="TeamOne ID:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtteamoneid" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblteamtwoid" Content="TeamTwo ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtteamtwoid" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblvenueid" Content="Venue ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <ComboBox x:Name="cbvenueid" HorizontalAlignment="Left" Height="23"   VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button Name="mInsert" Content="Add New" Width="70" Margin="10" Click="mInsert_Click"></Button>
+
+                                <Button Name="mUpdate" Content="Update" Width="70" Margin="10" Click="mUpdate_Click"></Button>
+
+                                <Button Name="mDelete" Content="Delete" Width="70" Margin="10" Click="mDelete_Click"></Button>
+
+                                <Button Name="mview" Content="View" Width="70" Margin="10" Click="mview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Schedule" Margin="65,-2,-84,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="60,60">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblschid" Content="Schedule ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <ComboBox x:Name="cbschid" HorizontalAlignment="Right" Height="23" Width="137"  VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblmaid" Content="Match ID:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <ComboBox x:Name="cbmaid" HorizontalAlignment="Right" Height="23"  VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblvid" Content="Venue ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <ComboBox x:Name="cbvid" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="137"  ></ComboBox>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblschdid" Content="Schedule Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <DatePicker Name="dpschdate" Width="137"></DatePicker>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblstarttime" Content="Start Time:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtstarttime"  HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblendtime" Content="End Time:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtendtime" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel>
+
+                                <Button Name="sInsert" Content="Add New" Width="70" Margin="10" Click="sInsert_Click"></Button>
+
+                                <Button Name="sUpdate" Content="Update" Width="70" Margin="10" Click="sUpdate_Click"></Button>
+
+                                <Button Name="sDelete" Content="Delete" Width="70" Margin="10" Click="sDelete_Click"></Button>
+
+                                <Button Name="sview" Content="View" Width="70" Margin="10" Click="sview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Venues" Margin="83,-2,-114,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblvenid" Content="Venue ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <ComboBox x:Name="cbvenid" HorizontalAlignment="Right" Height="23" Width="137" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblloc" Content="Location:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtloc" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblvdesc" Content="Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtdes" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="87" TextWrapping="Wrap" VerticalAlignment="Top" Width="139"  />
+                            </DockPanel>
+
+                            <DockPanel>
+                                <Button Name="vInsert" Content="Add New" Width="70" Margin="10" Click="vInsert_Click"></Button>
+
+                                <Button Name="vUpdate" Content="Update" Width="70" Margin="10" Click="vUpdate_Click"></Button>
+
+                                <Button Name="vDelete" Content="Delete" Width="70" Margin="10" Click="vDelete_Click"></Button>
+
+                                <Button Name="vview" Content="View" Width="70" Margin="10" Click="vview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="Statistics" Margin="113,-2,-142,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="50,50">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltmid" Content="Team ID:" HorizontalAlignment="Left" Width="111" VerticalAlignment="Top"  />
+                                <ComboBox x:Name="cbtmid" HorizontalAlignment="Right" Height="23" Width="137" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblplayed" Content="Played:" Width="111" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtplayed" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblwon" Content="Won:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtwon" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbllost" Content="Lost:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtlost" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltied" Content="Tied:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txttied" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnr" Content="NR:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtnr" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnetrr" Content="NetRR:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtnetrr" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblpts" Content="PTS:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtpts" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblfpts" Content="FromPTS:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" RenderTransformOrigin="2.116,1.896"/>
+                                <TextBox x:Name="txtfpts" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button Name="stInsert" Content="Add New" Width="70" Margin="10" Click="stInsert_Click"></Button>
+
+                                <Button Name="stUpdate" Content="Update" Width="70" Margin="10" Click="stUpdate_Click"></Button>
+
+                                <Button Name="stDelete" Content="Delete" Width="70" Margin="10" Click="stDelete_Click"></Button>
+
+                                <Button Name="stview" Content="View" Width="70" Margin="10" Click="stview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="TicketCategory" Margin="140,-2,-149,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltcid" Content="Ticket Category ID:" HorizontalAlignment="Left" Width="160" VerticalAlignment="Top"  />
+                                <ComboBox x:Name="cbtcid" HorizontalAlignment="Right" Height="23" Width="137" VerticalAlignment="Top" />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltcn" Content="Ticket Category Name:" Width="160" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBox x:Name="txttcname" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="137"/>
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lbltcdesc" Content="Ticket Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txttcdes" HorizontalAlignment="Left" Height="63" TextWrapping="Wrap" VerticalAlignment="Top" Width="136"  />
+                            </DockPanel>
+
+                            <DockPanel>
+                                <Button Name="tcInsert" Content="Add New" Width="70" Margin="10" Click="tcInsert_Click"></Button>
+
+                                <Button Name="tcUpdate" Content="Update" Width="70" Margin="10" Click="tcUpd_Click"></Button>
+
+                                <Button Name="tcDelete" Content="Delete" Width="70" Margin="10" Click="tcDel_Click"></Button>
+
+                                <Button Name="tcview" Content="View" Width="70" Margin="10" Click="tcview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="News" Margin="147,-2,-184,-1" FontSize="16" FontFamily="Times New Roman">
+                    <DockPanel Margin="70,70">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnmid" Content="Match ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" RenderTransformOrigin="1.281,1.122"/>
+                                <ComboBox x:Name="cbnmid" HorizontalAlignment="Left" Height="29"  VerticalAlignment="Top" Width="216"  />
+                            </DockPanel>
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                                <Label x:Name="lblnewsdesc" Content="News Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" RenderTransformOrigin="1.281,1.122"/>
+                                <TextBox x:Name="txtnewsdes" HorizontalAlignment="Left" Height="118" TextWrapping="Wrap" VerticalAlignment="Top" Width="222"  />
+                            </DockPanel>
+                            <DockPanel>
+                                <Button Name="nwInsert" Content="Add New" Width="70" Margin="10" Click="nwInsert_Click"></Button>
+
+                                <Button Name="nwUpdate" Content="Update" Width="70" Margin="10" Click="nwUpdate_Click"></Button>
+
+                                <Button Name="nwDelete" Content="Delete" Width="70" Margin="10" Click="nwDelete_Click"></Button>
+
+                                <Button Name="nwview" Content="View" Width="70" Margin="10" Click="nwview_Click"></Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+
+        </DockPanel>
+    </Grid>
+</Window>
+
+xaml.cs
+using IPL_BLL;
+
+using IPL_Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Presentation_Layer
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoadTeamList();
+                LoadPlayerList();
+                LoadVenueList();
+                LoadMatchList();
+                LoadScheduleList();
+                LoadStat();
+                LoadNewsList();
+                LoadTCatList();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void btnView_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+        //Team Methods
+        private void TeamClearBox()
+        {
+            cbteid.Text = string.Empty;
+            txtname.Clear();
+            txthg.Clear();
+            txtowner.Clear();
+        }
+        private void LoadTeamList()
+        {
+            BLL obj = new BLL();
+            List<Team> t = obj.GetAll_Team().ToList();
+            cbtid.ItemsSource = t;
+            cbtid.DisplayMemberPath = "TeamId";
+            cbteid.ItemsSource = t;
+            cbteid.DisplayMemberPath = "TeamId";
+
+        }
+        private void btnDel_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+
+            int id = int.Parse(cbteid.Text);
+            BLL obj = new BLL();
+            obje = obj.delete_Team(id);
+            MessageBox.Show("Deleted Successfully");
+            TeamClearBox();
+        }
+        private void btnUpd_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                Team t = new Team();
+                Team lb = (Team)cbteid.SelectedItem;
+                t.TeamId = lb.TeamId;
+                t.TeamName = txtname.Text;
+                t.HomeGround = txthg.Text;
+                t.Owners = txtowner.Text;
+                BLL obj = new BLL();
+                obj.update_Team(t);
+                MessageBox.Show("Updated Successfullly");
+                TeamClearBox();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void tInsert_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            Team t = new Team();
+            try
+            {
+                if (tInsert.Content.ToString() == "Add New")
+                {
+                    TeamClearBox();
+                    cbteid.IsEditable = true;
+                    cbteid.Text = string.Empty;
+                    tInsert.Content = "Insert";
+                }
+                else if (tInsert.Content.ToString() == "Insert")
+                {
+                    t.TeamId = int.Parse(cbteid.Text.ToString());
+                    t.TeamName = txtname.Text;
+                    t.HomeGround = txthg.Text;
+                    t.Owners = txtowner.Text;
+                    BLL obj = new BLL();
+                    obj.insert_Team(t);
+                    MessageBox.Show("Inserted Successfully");
+                    tInsert.Content = "Add New";
+                    TeamClearBox();
+                    LoadTeamList();
+                    cbteid.IsEditable = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        private void tview_Click(object sender, RoutedEventArgs e)
+        {
+
+            cbteid.IsEditable = true;
+            var obje = new List<Team>();
+            Team t = (Team)(cbteid.SelectedItem);
+            BLL obj = new BLL();
+            LoadTeamList();
+            obje = obj.view_Team(t.TeamId);
+            cbteid.ItemsSource = obje;
+            cbteid.DisplayMemberPath = "TeamId";
+            cbteid.Text = obje[0].TeamId.ToString();
+            txtname.Text = obje[0].TeamName;
+            txthg.Text = obje[0].HomeGround;
+            txtowner.Text = obje[0].Owners;
+
+        }
+
+
+        //players methgods
+        private void PlayerClearBox()
+        {
+            cbtid.Text = string.Empty;
+            txtpname.Clear();
+            txtage.Clear();
+            cbpid.Text = string.Empty;
+        }
+        private void LoadPlayerList()
+        {
+            BLL obj = new BLL();
+            List<Player> pl = obj.GetAll_Player().ToList();
+            cbpid.ItemsSource = pl;
+            cbpid.DisplayMemberPath = "PlayerId";
+
+        }
+        private void pInsert_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            try
+            {
+                if (pInsert.Content.ToString() == "Add New")
+                {
+                    PlayerClearBox();
+                    LoadPlayerList();
+                    LoadTeamList();
+                    cbpid.IsEditable = true;
+                    pInsert.Content = "Insert";
+                }
+                else if (pInsert.Content.ToString() == "Insert")
+                {
+                    Player p = new Player();
+                    p.PlayerId = int.Parse(cbpid.Text.ToString());
+                    p.TeamId = int.Parse(cbtid.Text.ToString());
+                    p.PlayerName = txtpname.Text;
+                    p.Age = int.Parse(txtage.Text);
+                    BLL obj = new BLL();
+                    obj.insert_Player(p);
+                    MessageBox.Show("Inserted Successsfully");
+                    LoadTeamList();
+                    LoadPlayerList();
+                    PlayerClearBox();
+
+                    cbpid.IsEditable = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void pUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Player p = new Player();
+                Player lb = (Player)cbpid.SelectedItem;
+                p.PlayerId = lb.PlayerId;
+                Team tb = (Team)cbtid.SelectedItem;
+                p.TeamId = tb.TeamId;
+                p.PlayerName = txtpname.Text;
+                p.Age = int.Parse(txtage.Text);
+                BLL obj = new BLL();
+                obj.update_Player(p);
+                MessageBox.Show("Updated successfully");
+                LoadTeamList();
+                LoadPlayerList();
+                PlayerClearBox();
+                cbpid.IsEditable = false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void pDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+            int id = int.Parse(cbpid.Text);
+            BLL obj = new BLL();
+            obje = obj.delete_Player(id);
+            MessageBox.Show("Deleted Successfully");
+            LoadTeamList();
+            LoadPlayerList();
+            PlayerClearBox();
+            cbpid.IsEditable = false;
+        }
+
+        private void pview_Click(object sender, RoutedEventArgs e)
+        {
+            var obje = new List<Player>();
+            cbpid.IsEditable = true;
+            int search = int.Parse(cbpid.Text);
+            BLL obj = new BLL();
+            obje = obj.view_Player(search);
+            txtpname.Text = obje[0].PlayerName;
+            cbtid.Text = obje[0].TeamId.ToString();
+            txtage.Text = obje[0].Age.ToString();
+        }
+
+
+        //match methods
+        private void MatchClearBox()
+        {
+            cbmid.Text = string.Empty;
+            txtteamoneid.Clear();
+            txtteamtwoid.Clear();
+            cbvenueid.Text = string.Empty;
+        }
+        private void LoadMatchList()
+        {
+            BLL obj = new BLL();
+            List<Match> pl = obj.GetAll_Match().ToList();
+            cbmid.ItemsSource = pl;
+            cbmid.DisplayMemberPath = "MatchId";
+            cbmaid.ItemsSource = pl;
+            cbmaid.DisplayMemberPath = "MatchId";
+            cbnmid.ItemsSource = pl;
+            cbnmid.DisplayMemberPath = "MatchId";
+            cbvenueid.IsEditable = false;
+
+        }
+        private void mInsert_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            try
+            {
+                if (mInsert.Content.ToString() == "Add New")
+                {
+                    MatchClearBox();
+                    LoadMatchList();
+                    LoadVenueList();
+                    cbmid.IsEditable = true;
+                    mInsert.Content = "Insert";
+                }
+                else if (mInsert.Content.ToString() == "Insert")
+                {
+                    Venue v = new Venue();
+                    Match m = new Match();
+                    m.MatchId = int.Parse(cbmid.Text.ToString());
+                    m.TeamOneId = int.Parse(txtteamoneid.Text);
+                    m.TeamTwoId = int.Parse(txtteamtwoid.Text);
+                    Venue lb = (Venue)(cbvenueid.SelectedItem);
+                    m.VenueId = lb.VenueId;
+                    BLL obj = new BLL();
+                    obj.insert_Match(m);
+                    MessageBox.Show("Inserted Successsfully");
+                    LoadMatchList();
+                    LoadVenueList();
+                    MatchClearBox();
+                    mInsert.Content = "Add New";
+                    cbmid.IsEditable = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void mUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Match m = new Match();
+                Match mb = (Match)cbmid.SelectedItem;
+                m.MatchId = mb.MatchId;
+                m.TeamOneId = int.Parse(txtteamoneid.Text);
+                m.TeamTwoId = int.Parse(txtteamtwoid.Text);
+                Venue lb = (Venue)(cbvenueid.SelectedItem);
+                m.VenueId = lb.VenueId;
+                BLL obj = new BLL();
+                obj.update_Match(m);
+                MessageBox.Show("Updated Successsfully");
+                LoadVenueList();
+                LoadMatchList();
+                MatchClearBox();
+                cbmid.IsEditable = false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void mDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+
+            int id = int.Parse(cbmid.Text);
+            BLL obj = new BLL();
+            obje = obj.delete_Match(id);
+            MessageBox.Show("Deleted Successfully");
+            LoadVenueList();
+            LoadMatchList();
+            MatchClearBox();
+            cbmid.IsEditable = false;
+        }
+        private void mview_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                var obje = new List<Match>();
+                cbmid.IsEditable = true;
+                int search = int.Parse(cbmid.Text);
+                BLL obj = new BLL();
+                obje = obj.view_Match(search);
+                cbvenueid.Text = obje[0].VenueId.ToString();
+                txtteamoneid.Text = obje[0].TeamOneId.ToString();
+                txtteamtwoid.Text = obje[0].TeamTwoId.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+
+        //Schedule methods
+        private void ScheduleClearBox()
+        {
+            cbmaid.Text = string.Empty;
+            cbschid.Text = string.Empty;
+            dpschdate.SelectedDate = null;
+            txtstarttime.Clear();
+            txtendtime.Clear();
+            cbvid.Text = string.Empty;
+        }
+        private void LoadScheduleList()
+        {
+            BLL obj = new BLL();
+            List<Schedule> sc = obj.GetAll_Schedule().ToList();
+            cbschid.ItemsSource = sc;
+            cbschid.DisplayMemberPath = "ScheduleId";
+            cbmaid.IsEditable = false;
+            cbvid.IsEditable = false;
+
+        }
+        private void sInsert_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            try
+            {
+                if (sInsert.Content.ToString() == "Add New")
+                {
+                    ScheduleClearBox();
+                    cbschid.IsEditable = true;
+                    sInsert.Content = "Insert";
+                }
+                else if (sInsert.Content.ToString() == "Insert")
+                {
+                    Schedule s = new Schedule();
+                    s.ScheduleId = int.Parse(cbschid.Text.ToString());
+                    Match mb = (Match)(cbmaid.SelectedItem);
+                    s.MatchId = mb.MatchId;
+                    Venue lb = (Venue)(cbvid.SelectedItem);
+                    s.Schedule_VenueId = lb.VenueId;
+                    s.ScheduleDate = DateTime.Parse(dpschdate.Text);
+                    s.StartTime = txtstarttime.Text;
+                    s.EndTime = txtendtime.Text;
+                    BLL obj = new BLL();
+                    obj.insert_Schedule(s);
+                    MessageBox.Show("Inserted Successsfully");
+                    LoadMatchList();
+                    LoadVenueList();
+                    LoadScheduleList();
+                    ScheduleClearBox();
+                    sInsert.Content = "Add New";
+                    cbschid.IsEditable = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void sUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Schedule s = new Schedule();
+                Schedule sb = (Schedule)cbschid.SelectedItem;
+                s.ScheduleId = sb.ScheduleId;
+                Match mb = (Match)(cbmaid.SelectedItem);
+                s.MatchId = mb.MatchId;
+                Venue lb = (Venue)(cbvid.SelectedItem);
+                s.Schedule_VenueId = lb.VenueId;
+                s.ScheduleDate = DateTime.Parse(dpschdate.Text);
+                s.StartTime = txtstarttime.Text;
+                s.EndTime = txtendtime.Text;
+                BLL obj = new BLL();
+                obj.update_Schedule(s);
+                MessageBox.Show("Updated Successsfully");
+                LoadVenueList();
+                LoadMatchList();
+                LoadScheduleList();
+                ScheduleClearBox();
+                cbschid.IsEditable = false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void sDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+
+            int id = int.Parse(cbschid.Text);
+            BLL obj = new BLL();
+            obje = obj.delete_Schedule(id);
+            if (obje == 1)
+            {
+                MessageBox.Show("Deleted Successfully");
+                LoadVenueList();
+                LoadMatchList();
+                LoadScheduleList();
+                ScheduleClearBox();
+                cbschid.IsEditable = false;
+            }
+        }
+        private void sview_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                var obje = new List<Schedule>();
+                cbschid.IsEditable = true;
+                int search = int.Parse(cbschid.Text);
+                BLL obj = new BLL();
+                obje = obj.view_Schedule(search);
+                cbvid.Text = obje[0].Schedule_VenueId.ToString();
+                cbmaid.Text = obje[0].MatchId.ToString();
+                dpschdate.SelectedDate = obje[0].ScheduleDate;
+                txtstarttime.Text = obje[0].StartTime.ToString();
+                txtendtime.Text = obje[0].EndTime.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+
+
+
+        //venue Methods
+        private void VenueClearBox()
+        {
+            cbvenid.Text = string.Empty;
+            txtloc.Clear();
+            txtdes.Clear();
+        }
+        private void LoadVenueList()
+        {
+
+            BLL obj = new BLL();
+            List<Venue> v = obj.GetAll_venue().ToList();
+            cbvid.ItemsSource = v;
+            cbvid.DisplayMemberPath = "VenueId";
+            cbvenueid.ItemsSource = v;
+            cbvenueid.DisplayMemberPath = "VenueId";
+            cbvenid.ItemsSource = v;
+            cbvenid.DisplayMemberPath = "VenueId";
+        }
+        private void vInsert_Click(object sender, RoutedEventArgs e)
+        {
+
+            Entities entity = new Entities();
+            try
+            {
+                if (vInsert.Content.ToString() == "Add New")
+                {
+                    VenueClearBox();
+                    cbvenid.IsEditable = true;
+                    vInsert.Content = "Insert";
+                }
+                else if (vInsert.Content.ToString() == "Insert")
+                {
+                    Venue v = new Venue();
+                    v.VenueId = int.Parse(cbvenid.Text.ToString());
+                    v.Location = txtloc.Text;
+                    v.VenueDescription = txtdes.Text;
+                    BLL obj = new BLL();
+                    obj.insert_Venue(v);
+                    MessageBox.Show("Inserted Successsfully");
+                    LoadVenueList();
+                    VenueClearBox();
+                    vInsert.Content = "Add New";
+                    cbvenid.IsEditable = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void vUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Venue v = new Venue();
+                Venue sb = (Venue)cbvenid.SelectedItem;
+                v.VenueId = sb.VenueId;
+                v.Location = txtloc.Text;
+                v.VenueDescription = txtdes.Text;
+                BLL obj = new BLL();
+                obj.update_Venue(v);
+                MessageBox.Show("Updated Successsfully");
+                LoadVenueList();
+                VenueClearBox();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void vDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+
+            int id = int.Parse(cbvenid.Text);
+            BLL obj = new BLL();
+            obje = obj.delete_Venue(id);
+            MessageBox.Show("Deleted Successfully");
+            LoadVenueList();
+            VenueClearBox();
+        }
+
+        private void vview_Click(object sender, RoutedEventArgs e)
+        {
+            var obje = new List<Venue>();
+            int search = int.Parse(cbvenid.Text);
+            BLL obj = new BLL();
+            obje = obj.view_Venue(search);
+            txtloc.Text = obje[0].Location;
+            txtdes.Text = obje[0].VenueDescription.ToString();
+        }
+
+
+
+        //statistics
+        private void StatisticsClearBox()
+        {
+            cbtmid.Text = string.Empty;
+            txtplayed.Clear();
+            txtwon.Clear();
+            txtlost.Clear();
+            txttied.Clear();
+            txtnr.Clear();
+            txtnetrr.Clear();
+            txtpts.Clear();
+            txtfpts.Clear();
+        }
+        private void LoadStat()
+        {
+            BLL obj = new BLL();
+            List<Stat> st = obj.GetAll_Stat().ToList();
+            cbtmid.ItemsSource = st;
+            cbtmid.DisplayMemberPath = "TeamId";
+
+        }
+        private void stInsert_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            try
+            {
+                if (stInsert.Content.ToString() == "Add New")
+                {
+                    StatisticsClearBox();
+                    cbtmid.IsEditable = true;
+                    BLL obj = new BLL();
+                    List<Team> t = obj.GetAll_Team().ToList();
+                    stInsert.Content = "Insert";
+                    cbtmid.ItemsSource = t;
+                    cbtmid.DisplayMemberPath = "TeamId";
+                }
+                else if (stInsert.Content.ToString() == "Insert")
+                {
+                    Stat st = new Stat();
+                    st.TeamId = int.Parse(cbtmid.Text.ToString());
+                    st.Played = int.Parse(txtplayed.Text);
+                    st.Won = int.Parse(txtwon.Text);
+                    st.Lost = int.Parse(txtlost.Text);
+                    st.Tied = int.Parse(txttied.Text);
+                    st.NR = int.Parse(txtnr.Text);
+                    st.NetRR = float.Parse(txtnetrr.Text);
+                    st.Pts = int.Parse(txtpts.Text);
+                    st.FromPoints = int.Parse(txtfpts.Text);
+                    BLL obj = new BLL();
+                    obj.insert_Statistics(st);
+                    MessageBox.Show("Inserted Successsfully");
+                    StatisticsClearBox();
+                    LoadStat();
+                    stInsert.Content = "Add New";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void stUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Stat st = new Stat();
+
+                st.TeamId = int.Parse(cbtmid.Text.ToString());
+                st.Played = int.Parse(txtplayed.Text);
+                st.Won = int.Parse(txtwon.Text);
+                st.Lost = int.Parse(txtlost.Text);
+                st.Tied = int.Parse(txttied.Text);
+                st.NR = int.Parse(txtnr.Text);
+                st.NetRR = float.Parse(txtnetrr.Text);
+                st.Pts = int.Parse(txtpts.Text);
+                st.FromPoints = int.Parse(txtfpts.Text);
+                BLL obj = new BLL();
+                obj.update_Statistics(st);
+                MessageBox.Show("Updated Successsfully");
+                StatisticsClearBox();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void stDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+            int id = int.Parse(cbtmid.Text);
+            BLL obj = new BLL();
+            obje = obj.delete_Statistics(id);
+            if (obje == 1)
+            {
+                MessageBox.Show("Deleted Successfully");
+                StatisticsClearBox();
+            }
+        }
+        private void stview_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var obje = new List<Stat>();
+                cbtmid.IsEditable = true;
+                int search = int.Parse(cbtmid.Text);
+                BLL obj = new BLL();
+                obje = obj.view_Statistics(search);
+                txtplayed.Text = obje[0].Played.ToString();
+                txtwon.Text = obje[0].Won.ToString();
+                txtlost.Text = obje[0].Lost.ToString();
+                txttied.Text = obje[0].Tied.ToString();
+                txtnr.Text = obje[0].NR.ToString();
+                txtnetrr.Text = obje[0].NetRR.ToString();
+                txtpts.Text = obje[0].Pts.ToString();
+                txtfpts.Text = obje[0].FromPoints.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        //TicketCategory
+        private void TcatClearBox()
+        {
+            cbtcid.Text = string.Empty;
+            txttcname.Clear();
+            txttcdes.Clear();
+        }
+        private void LoadTCatList()
+        {
+            BLL obj = new BLL();
+            List<TicketCategory> t = obj.GetAll_Tc().ToList();
+            cbtcid.ItemsSource = t;
+            cbtcid.DisplayMemberPath = "TicketCategoryId";
+
+        }
+        private void tcDel_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+            int id = int.Parse(cbtcid.Text);
+            BLL obj = new BLL();
+            obje = obj.delete_Tc(id);
+            MessageBox.Show("Deleted Successfully");
+            TcatClearBox();
+        }
+        private void tcUpd_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                TicketCategory t = new TicketCategory();
+                t.TicketCategoryId = int.Parse(cbtcid.Text.ToString());
+                t.TicketCategoryName = txttcname.Text;
+                t.TicketDescription = txttcdes.Text;
+                BLL obj = new BLL();
+                obj.update_Tc(t);
+                MessageBox.Show("Updated Successfullly");
+                TcatClearBox();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void tcInsert_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            TicketCategory t = new TicketCategory();
+            try
+            {
+                if (tcInsert.Content.ToString() == "Add New")
+                {
+                    TcatClearBox();
+                    cbtcid.IsEditable = true;
+                    cbtcid.Text = string.Empty;
+                    tcInsert.Content = "Insert";
+                }
+                else if (tcInsert.Content.ToString() == "Insert")
+                {
+                    t.TicketCategoryId = int.Parse(cbtcid.Text.ToString());
+                    t.TicketCategoryName = txttcname.Text;
+                    t.TicketDescription = txttcdes.Text;
+                    BLL obj = new BLL();
+                    obj.insert_Tc(t);
+                    MessageBox.Show("Inserted Successfully");
+                    tcInsert.Content = "Add New";
+                    TcatClearBox();
+                    LoadTCatList();
+                    cbtcid.IsEditable = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        private void tcview_Click(object sender, RoutedEventArgs e)
+        {
+
+            cbtcid.IsEditable = true;
+            LoadTCatList();
+            var obje = new List<TicketCategory>();
+            TicketCategory t = (TicketCategory)(cbtcid.SelectedItem);
+            BLL obj = new BLL();
+            obje = obj.view_Tc(t.TicketCategoryId);
+            txttcname.Text = obje[0].TicketCategoryName;
+            txttcdes.Text = obje[0].TicketDescription;
+
+        }
+
+        //news
+
+        private void NewsClearBox()
+        {
+            cbnmid.Text = string.Empty;
+            txtnewsdes.Clear();
+
+        }
+        private void LoadNewsList()
+        {
+            BLL obj = new BLL();
+            List<News> t = obj.GetAll_News().ToList();
+            cbnmid.ItemsSource = t;
+            cbnmid.DisplayMemberPath = "MatchId";
+
+        }
+        private void nwInsert_Click(object sender, RoutedEventArgs e)
+        {
+            Entities entity = new Entities();
+            News n = new News();
+            try
+            {
+                if (nwInsert.Content.ToString() == "Add New")
+                {
+                    NewsClearBox();
+                    nwInsert.Content = "Insert";
+                    BLL obj = new BLL();
+                    List<Match> t = obj.GetAll_Match().ToList();
+                    cbnmid.ItemsSource = t;
+                    cbnmid.DisplayMemberPath = "MatchId";
+                }
+                else if (nwInsert.Content.ToString() == "Insert")
+                {
+                    Match nb = (Match)cbnmid.SelectedItem;
+                    n.MatchId = nb.MatchId;
+                    n.NewsDescription = txtnewsdes.Text;
+                    BLL obj = new BLL();
+                    obj.insert_News(n);
+                    MessageBox.Show("Inserted Successfully");
+                    nwInsert.Content = "Add New";
+                    LoadNewsList();
+                    NewsClearBox();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void nwUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                News n = new News();
+
+                n.MatchId = int.Parse(cbnmid.Text.ToString());
+                n.NewsDescription = txtnewsdes.Text;
+                BLL obj = new BLL();
+                obj.update_News(n);
+                MessageBox.Show("Updated Successfullly");
+                NewsClearBox();
+                LoadNewsList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void nwDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int obje;
+            int id = int.Parse(cbnmid.Text);
+            BLL obj = new BLL();
+            obje = obj.delete_News(id);
+            MessageBox.Show("Deleted Successfully");
+            NewsClearBox();
+            LoadNewsList();
+        }
+
+        private void nwview_Click(object sender, RoutedEventArgs e)
+        {
+            var obje = new List<News>();
+            int search = Convert.ToInt32(cbnmid.Text.ToString());
+            BLL obj = new BLL();
+            obje = obj.view_News(search);
+            txtnewsdes.Text = obje[0].NewsDescription;
+
+        }
+    }
+}

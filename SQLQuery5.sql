@@ -1,0 +1,1 @@
+﻿select * from IPL_MGMT_SYSTEM.Stat;
